@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.campustransaction.ui.UIViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".personal_center.PersonalCenterFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="0dp"
+            android:gravity="center_horizontal|top"
+            android:orientation="vertical"
+            tools:context=".ui.personal_center.PersonalCenterFragment"
+            tools:ignore="UselessParent">
+
+            <!-- <de.hdodenhof.circleimageview.CircleImageView -->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/headPortrait"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/head_portrait"
+                android:src="@drawable/my_avatar"
+                android:layout_marginTop="15dp"
+                tools:ignore="ImageContrastCheck" />
+
+            <TextView
+                android:id="@+id/title_email_address"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:text="@{viewModel.myUserInfo.emailAddress}"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/text_nickname"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="5dp"
+                android:autofillHints=""
+                android:hint="@string/nickname"
+                android:inputType="text"
+                android:textAlignment="textStart"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/text_lastname"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="5dp"
+                android:autofillHints=""
+                android:hint="@string/lastname"
+                android:inputType="text"
+                android:textAlignment="textStart"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/text_firstname"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="5dp"
+                android:autofillHints=""
+                android:hint="@string/firstname"
+                android:inputType="text"
+                android:textAlignment="textStart"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/text_studentID"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="5dp"
+                android:autofillHints=""
+                android:hint="@string/studentId"
+                android:inputType="numberDecimal"
+                android:textAlignment="textStart"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/text_profile"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="5dp"
+                android:autofillHints=""
+                android:hint="@string/profile"
+                android:inputType="text"
+                android:textAlignment="textStart"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/text_region"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="5dp"
+                android:autofillHints=""
+                android:hint="@string/region"
+                android:inputType="text"
+                android:textAlignment="textStart"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/text_Phone_number"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="5dp"
+                android:autofillHints=""
+                android:hint="@string/phone_number"
+                android:inputType="phone"
+                android:textAlignment="textStart"
+                android:textSize="15sp" />
+
+            <Spinner
+                android:id="@+id/spinner_school"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="5dp"
+                android:spinnerMode="dialog"
+                android:hint="@string/school"/>
+
+            <RadioGroup
+                android:id="@+id/radioGroup_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/button_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/male" />
+                <RadioButton
+                    android:id="@+id/button_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/female" />
+                <RadioButton
+                    android:id="@+id/button_hide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:checked="true"
+                    android:text="@string/hide"/>
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/button_birthday"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif"
+                android:text="@string/birthday"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+    </FrameLayout>
+</layout>

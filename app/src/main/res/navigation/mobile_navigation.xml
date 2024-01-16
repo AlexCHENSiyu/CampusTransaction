@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/mainNavigation">
+
+    <fragment
+        android:id="@+id/mainNavigation"
+        android:name="com.example.campustransaction.ui.main.MainFragment"
+        android:label="Main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainNavigation_to_postDetailFragment"
+            app:destination="@id/postDetailFragment" />
+        <action
+            android:id="@+id/action_mainNavigation_to_bannerDetailFragment"
+            app:destination="@id/bannerDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/postsNavigation"
+        android:name="com.example.campustransaction.ui.posts.PostsFragment"
+        android:label="Posts"
+        tools:layout="@layout/fragment_posts" >
+        <action
+            android:id="@+id/action_postsNavigation_to_photoFragment"
+            app:destination="@id/photoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/messageNavigation"
+        android:name="com.example.campustransaction.ui.message.MessageFragment"
+        android:label="Messages"
+        tools:layout="@layout/fragment_message" >
+        <action
+            android:id="@+id/action_messageNavigation_to_messageDetailFragment"
+            app:destination="@id/messageDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userInfoNavigation"
+        android:name="com.example.campustransaction.ui.userInfo.UserInfoFragment"
+        android:label="User Info"
+        tools:layout="@layout/fragment_user_info">
+        <action
+            android:id="@+id/action_userInfoNavigation_to_resetPassword2Fragment"
+            app:destination="@id/resetPassword2Fragment" />
+        <action
+            android:id="@+id/action_userInfoNavigation_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+        <action
+            android:id="@+id/action_userInfoNavigation_to_personalCenterFragment"
+            app:destination="@id/personalCenterFragment" />
+        <action
+            android:id="@+id/action_userInfoNavigation_to_mainActivity"
+            app:destination="@id/mainActivity"
+            app:popUpTo="@id/mainActivity"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_userInfoNavigation_to_userPostFragment"
+            app:destination="@id/userPostFragment" />
+        <action
+            android:id="@+id/action_userInfoNavigation_to_favoriteActivity"
+            app:destination="@id/favoriteActivity"
+            app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/resetPassword2Fragment"
+        android:name="com.example.campustransaction.reset_password.ResetPassword2Fragment"
+        android:label="Reset Password"
+        tools:layout="@layout/fragment_reset_password2">
+        <action
+            android:id="@+id/action_resetPassword2Fragment_to_userInfoNavigation"
+            app:destination="@id/userInfoNavigation"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/personalCenterFragment"
+        android:name="com.example.campustransaction.personal_center.PersonalCenterFragment"
+        android:label="Personal Center"
+        tools:layout="@layout/fragment_personal_center">
+        <action
+            android:id="@+id/action_personalCenterFragment_to_userInfoNavigation"
+            app:destination="@id/userInfoNavigation"
+            app:popUpTo="@id/userInfoNavigation" />
+        <action
+            android:id="@+id/action_personalCenterFragment_to_photoFragment"
+            app:destination="@id/photoFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.campustransaction.about.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_about" >
+        <action
+            android:id="@+id/action_aboutFragment_to_userInfoNavigation"
+            app:destination="@id/userInfoNavigation"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="com.example.campustransaction.photo.PhotoFragment"
+        android:label="Photo"
+        tools:layout="@layout/fragment_photo" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.campustransaction.MainActivity"
+        android:label="Main Page"
+        tools:layout="@layout/activity_main" />
+    <fragment
+        android:id="@+id/userPostFragment"
+        android:name="com.example.campustransaction.user_post.UserPostFragment"
+        android:label="User Post"
+        tools:layout="@layout/fragment_user_post" >
+        <action
+            android:id="@+id/action_myPostFragment_to_userInfoNavigation"
+            app:destination="@id/userInfoNavigation" />
+        <action
+            android:id="@+id/action_userPostFragment_to_postDetailFragment"
+            app:destination="@id/postDetailFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/favoriteActivity"
+        android:name="com.example.campustransaction.favorite.FavoriteActivity"
+        android:label="Favorite"
+        tools:layout="@layout/activity_favorite" >
+        <argument
+            android:name="EmailAddress"
+            app:argType="string" />
+        <argument
+            android:name="Password"
+            app:argType="string" />
+    </activity>
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="com.example.campustransaction.user_post.PostDetailFragment"
+        android:label="Post Detail"
+        tools:layout="@layout/fragment_post_detail">
+        <action
+            android:id="@+id/action_postDetailFragment_to_userPostFragment"
+            app:destination="@id/userPostFragment" />
+        <action
+            android:id="@+id/action_postDetailFragment_to_otherPersonalCenterFragment"
+            app:destination="@id/otherPersonalCenterFragment"
+            app:popUpTo="@id/otherPersonalCenterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/otherPersonalCenterFragment"
+        android:name="com.example.campustransaction.personal_center.OtherPersonalCenterFragment"
+        android:label="Other Personal Center"
+        tools:layout="@layout/fragment_other_personal_center">
+        <action
+            android:id="@+id/action_otherPersonalCenterFragment_to_userPostFragment"
+            app:destination="@id/userPostFragment"
+            app:popUpTo="@id/userPostFragment" />
+        <action
+            android:id="@+id/action_otherPersonalCenterFragment_to_messageDetailFragment"
+            app:destination="@id/messageDetailFragment"
+            app:popUpTo="@id/messageDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/messageDetailFragment"
+        android:name="com.example.campustransaction.ui.message.MessageDetailFragment"
+        android:label="MessageDetailFragment"
+        tools:layout="@layout/fragment_message_detail">
+        <action
+            android:id="@+id/action_messageDetailFragment_to_otherPersonalCenterFragment"
+            app:destination="@id/otherPersonalCenterFragment"
+            app:popUpTo="@id/otherPersonalCenterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bannerDetailFragment"
+        android:name="com.example.campustransaction.ui.main.BannerDetailFragment"
+        android:label="BannerDetailFragment"
+        tools:layout="@layout/fragment_banner_detail"/>
+
+</navigation>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.campustransaction.ui.UIViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="10dp"
+        tools:context=".ui.main.BannerDetailFragment">
+
+        <TextView
+            android:id="@+id/banner_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/Community_Convention"
+            android:textSize="20sp"/>
+
+    </FrameLayout>
+</layout>

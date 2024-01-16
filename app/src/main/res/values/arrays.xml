@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="product_type">
+        <item>General</item>
+        <item>Auction</item>
+        <item>Lost&amp;Found</item>
+    </string-array>
+
+    <string-array name="fields">
+        <item>Personal Computer</item>
+        <item>Phone</item>
+        <item>Digital</item>
+        <item>Food&amp;Drink</item>
+        <item>Books</item>
+        <item>Medicine</item>
+        <item>Bags</item>
+        <item>Sports</item>
+        <item>Fruits</item>
+        <item>Luxury</item>
+        <item>Auction</item>
+        <item>Lost&amp;Found</item>
+        <item>Jewelry</item>
+        <item>Watches</item>
+    </string-array>
+
+    <integer-array name="images">
+        <item>@drawable/personal_computer</item>
+        <item>@drawable/phone</item>
+        <item>@drawable/digital</item>
+        <item>@drawable/food_drink</item>
+        <item>@drawable/book</item>
+        <item>@drawable/medicine</item>
+        <item>@drawable/bag</item>
+        <item>@drawable/sports</item>
+        <item>@drawable/fruits</item>
+        <item>@drawable/luxury</item>
+        <item>@drawable/auction</item>
+        <item>@drawable/lost_found</item>
+        <item>@drawable/jewelry</item>
+        <item>@drawable/watches</item>
+    </integer-array>
+
+    <integer-array name="colors">
+        <item>@color/roseStart</item>
+        <item>@color/roseEnd</item>
+        <item>@color/blueStart</item>
+        <item>@color/blueEnd</item>
+        <item>@color/greenStart</item>
+        <item>@color/greenEnd</item>
+        <item>@color/purpleStart</item>
+        <item>@color/purpleEnd</item>
+    </integer-array>
+
+</resources>
