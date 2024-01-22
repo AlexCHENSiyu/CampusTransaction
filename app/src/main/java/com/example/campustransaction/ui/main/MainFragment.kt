@@ -103,6 +103,7 @@ class MainFragment : Fragment(){
                     override fun onItemClick(view: View, position: Int) {
                         //Toast.makeText(context, "click $position item", Toast.LENGTH_SHORT).show()
                         viewModel.postDetail = viewModel.responseGetPosts.value!!.Posts?.get(position)
+                        viewModel.postOwner = viewModel.postDetail!!.PostOwner
                         //Toast.makeText(context, "PostOwner: ${viewModel.postDetail?.PostOwner}", Toast.LENGTH_SHORT).show()
                         view.findNavController().navigate(R.id.action_mainNavigation_to_postDetailFragment)
                     }

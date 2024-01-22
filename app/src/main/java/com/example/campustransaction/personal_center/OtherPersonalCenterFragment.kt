@@ -52,6 +52,7 @@ class OtherPersonalCenterFragment : Fragment() {
         }
 
         binding.buttonCheckPost.setOnClickListener {
+            Log.d("OtherPersonalCenter", "Email:${viewModel.otherPersonal}")
             viewModel.postOwner = viewModel.otherPersonal
             view?.findNavController()?.navigate(R.id.action_otherPersonalCenterFragment_to_userPostFragment)
         }
