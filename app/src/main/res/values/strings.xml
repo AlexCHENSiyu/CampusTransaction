@@ -13,7 +13,7 @@
     <string name="verify">Verify</string>
     <string name="logout">Logout</string>
     <string name="user_information">User Information</string>
-    <string name="my_posts">My posts</string>
+    <string name="my_posts">My\nposts</string>
     <string name="about">About</string>
     <string name="default_name">Default name</string>
     <string name="head_portrait">headPortrait</string>
@@ -79,4 +79,6 @@
     <string name="labels">Choose\nLabels</string>
     <string name="Tutorial_for_Beginners">Tutorial for Beginners\n\n \t\t1. Welcome to HKUST Campus Transaction! If you would like to search for an item, please enter the name in the search field on the home page and you will see all the items currently for sale.\n\n \t\t2. If you have an item you would like to trade, please click on posts in the toolbar below, then upload the item details and image, click submit and your item will appear in our store.\n\n \t\t3. When you are interested in an item you have the option to initiate a private chat with the seller. All chat messages can be viewed in the toolbar under Message.\n\n \t\t4. If you have forgotten your password, you can reset it using the email address you provided when you registered. Please be assured that the email address you provide will only be used within the app.\n\n \t\t5. If you wish to view or amend your personal information, you can do so by clicking on UserInfo in the toolbar. All personal information can be known and modified in UserInfo.\n\n</string>
     <string name="Community_Convention">\t\t1. The community is set up to facilitate HKUST students and no one is allowed to use the platform to make a profit from secondary sales.\n\n \t\t2. Neither buyers nor sellers are allowed to disclose any personal information about the other.\n\n \t\t3. No uncivilized language is allowed in the community.\n\n \t\t4. All rights to this software are reserved to the creative team.\n\n</string>
+    <string name="favorite">my\nfavorite</string>
+    <string name="post_history">Post\nHistory</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.campustransaction.ui.main
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -11,6 +12,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
@@ -89,6 +92,9 @@ class MainFragment : Fragment(){
             }
         })
 
+        val spacingInPixels = resources.getDimensionPixelSize(R.dimen.spacing)
+        binding.recyclerPicture.addItemDecoration(SpacesItemDecoration(spacingInPixels))
+
         // 设置帖子列表
         viewModel.responseGetPosts.observe(viewLifecycleOwner){
             binding.swipeRefreshLayout.isRefreshing = false
@@ -97,7 +103,6 @@ class MainFragment : Fragment(){
                 val postList = viewModel.responseGetPosts.value!!.Posts
                 binding.recyclerPicture.adapter = context?.let { it1 -> postList?.let { it2 -> PostAdapter(it1, it2) } }
                 binding.recyclerPicture.setHasFixedSize(false)
-                //binding.recyclerPicture.addItemDecoration(SpaceItemDecoration(10))
 
                 (binding.recyclerPicture.adapter as PostAdapter?)?.setOnItemClickListener(object: PostAdapter.OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
@@ -116,8 +121,22 @@ class MainFragment : Fragment(){
         }
 
 
-
         return binding.root
     }
 
+}
+
+class SpacesItemDecoration(private val space: Int) : ItemDecoration() {
+    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+        outRect.left = space
+        outRect.right = space
+        outRect.bottom = space
+
+//        // Add top margin only for the first item to avoid double space between items
+//        if (parent.getChildAdapterPosition(view) == 0) {
+//            outRect.top = space
+//        } else {
+//            outRect.top = 0
+//        }
+    }
 }
