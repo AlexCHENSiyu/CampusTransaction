@@ -75,6 +75,10 @@ interface MongodbApiService {
     suspend fun apiGetPosts(@Query("EmailAddress") EmailAddress:String,
                             @Query("Keyword") Keyword:String? = null): ResponsePosts
 
+    @GET("click-post")
+    suspend fun apiClickPost(@Query("EmailAddress") EmailAddress:String,
+                             @Query("PID") PID:String): ResponseBasic
+
 }
 
 object MongodbApi {

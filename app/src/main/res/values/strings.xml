@@ -7,7 +7,7 @@
     <string name="login">Login</string>
     <string name="hkust_logo">HKUST_LOGO</string>
     <string name="start">Start</string>
-    <string name="hkust_campus_transaction">HKUST \n Campus Transaction</string>
+    <string name="campus_transaction">Campus Transaction</string>
     <string name="send_validation_code">Send validation code</string>
     <string name="input_valid_code">Input valid code</string>
     <string name="verify">Verify</string>
