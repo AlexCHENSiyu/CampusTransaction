@@ -64,6 +64,9 @@
             android:id="@+id/action_userInfoNavigation_to_favoriteActivity"
             app:destination="@id/favoriteActivity"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_userInfoNavigation_to_postHistoryFragment"
+            app:destination="@id/postHistoryFragment" />
     </fragment>
 
     <fragment
@@ -128,12 +131,12 @@
         android:name="com.example.campustransaction.favorite.FavoriteActivity"
         android:label="Favorite"
         tools:layout="@layout/activity_favorite" >
-        <argument
-            android:name="EmailAddress"
-            app:argType="string" />
-        <argument
-            android:name="Password"
-            app:argType="string" />
+<!--        <argument-->
+<!--            android:name="EmailAddress"-->
+<!--            app:argType="string" />-->
+<!--        <argument-->
+<!--            android:name="Password"-->
+<!--            app:argType="string" />-->
     </activity>
     <fragment
         android:id="@+id/postDetailFragment"
@@ -177,5 +180,14 @@
         android:name="com.example.campustransaction.ui.main.BannerDetailFragment"
         android:label="BannerDetailFragment"
         tools:layout="@layout/fragment_banner_detail"/>
+    <fragment
+        android:id="@+id/postHistoryFragment"
+        android:name="com.example.campustransaction.user_post.PostHistoryFragment"
+        android:label="PostHistoryFragment"
+        tools:layout="@layout/fragment_post_history">
+        <action
+            android:id="@+id/action_postHistoryFragment_to_postDetailFragment"
+            app:destination="@id/postDetailFragment" />
+    </fragment>
 
 </navigation>

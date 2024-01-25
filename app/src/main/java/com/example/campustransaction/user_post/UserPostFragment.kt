@@ -83,7 +83,6 @@ class UserPostFragment : Fragment() {
             }
         }
 
-
         return binding.root
     }
 
@@ -103,7 +102,6 @@ class UserPostFragment : Fragment() {
         viewModel.sdkDeletePost(pid)
         Log.d("UserPostFragment","deletePost")
     }
-
 
 }
 

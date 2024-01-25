@@ -51,7 +51,6 @@ class MainFragment : Fragment(){
             viewModel.sdkGetPosts()
         }
 
-
         // 设置横幅
         binding.banner.setAdapter(object : BannerImageAdapter<BannerDataBean>(BannerDataBean.testData3) {
             override fun onBindView(holder: BannerImageHolder, data: BannerDataBean, position: Int, size: Int) {
@@ -110,6 +109,7 @@ class MainFragment : Fragment(){
                         viewModel.postDetail = viewModel.responseGetPosts.value!!.Posts?.get(position)
                         viewModel.postOwner = viewModel.postDetail!!.PostOwner
                         //Toast.makeText(context, "PostOwner: ${viewModel.postDetail?.PostOwner}", Toast.LENGTH_SHORT).show()
+
                         view.findNavController().navigate(R.id.action_mainNavigation_to_postDetailFragment)
                     }
                     override fun onItemLongClick(view: View, position: Int) {
@@ -119,7 +119,6 @@ class MainFragment : Fragment(){
 
             }
         }
-
 
         return binding.root
     }

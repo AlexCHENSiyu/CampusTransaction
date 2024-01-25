@@ -80,7 +80,7 @@ interface MongodbApiService {
                              @Query("PID") PID:String): ResponseBasic
 
     @GET("get-post-history")
-    suspend fun apiClickPost(@Query("EmailAddress") EmailAddress:String): ResponsePosts
+    suspend fun apiPostHistory(@Query("EmailAddress") EmailAddress:String): ResponsePosts
 
 }
 

@@ -16,7 +16,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.campustransaction.api.*
+import com.example.campustransaction.api.MongodbApi
+import com.example.campustransaction.api.RequestMessage
+import com.example.campustransaction.api.RequestPost
+import com.example.campustransaction.api.RequestUserInfo
+import com.example.campustransaction.api.ResponseBasic
+import com.example.campustransaction.api.ResponseBasicMessage
+import com.example.campustransaction.api.ResponseBasicPost
+import com.example.campustransaction.api.ResponseMessages
+import com.example.campustransaction.api.ResponsePosts
+import com.example.campustransaction.api.ResponseUserInfo
 import kotlinx.coroutines.launch
 import java.io.BufferedOutputStream
 import java.io.File
@@ -240,8 +249,37 @@ class UIViewModel : ViewModel() {
         }
     }
 
+    // 主页点击帖子
+    private val _responseClickPost = MutableLiveData<ResponseBasic>()
+    val responseClickPost: LiveData<ResponseBasic>
+        get() = _responseClickPost
+    fun sdkClickPost(PID:String) {
+        viewModelScope.launch {
+            try {
+                _responseClickPost.value = MongodbApi.retrofitService.apiClickPost(myUserInfo.EmailAddress, PID)
+                Log.d("sdkClickPost","Success")
+            } catch (e: Exception) {
+                _responseClickPost.value = ResponseBasic(Success = false, Error = "Failure: ${e.message}")
+                Log.d("sdkClickPost", "Failure: ${e.message}")
+            }
+        }
+    }
 
-
+    // 获取消息浏览历史
+    private val _responsePostHistory = MutableLiveData<ResponsePosts>()
+    val responsePostHistory: LiveData<ResponsePosts>
+        get() = _responsePostHistory
+    fun sdkPostHistory(){
+        viewModelScope.launch {
+            try {
+                _responsePostHistory.value = MongodbApi.retrofitService.apiPostHistory(myUserInfo.EmailAddress)
+                Log.d("sdkDeletePost","Success")
+            } catch (e: Exception) {
+                _responsePostHistory.value = ResponsePosts(Success = false, Error = "Failure: ${e.message}")
+                Log.d("sdkDeletePost", "Failure: ${e.message}")
+            }
+        }
+    }
 
     //SDK -> API----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

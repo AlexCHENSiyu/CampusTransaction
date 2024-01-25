@@ -96,6 +96,10 @@ class UserInfoFragment : Fragment() {
             view?.findNavController()?.navigate(R.id.action_userInfoNavigation_to_userPostFragment)
         }
 
+        binding.buttonPostHistory.setOnClickListener {
+            viewModel.postOwner = viewModel.myUserInfo.EmailAddress
+            view?.findNavController()?.navigate(R.id.action_userInfoNavigation_to_postHistoryFragment)
+        }
 
         return binding.root
     }

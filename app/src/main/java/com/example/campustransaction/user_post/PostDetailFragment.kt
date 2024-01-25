@@ -27,6 +27,9 @@ class PostDetailFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
+        // 记录用户点击历史
+        viewModel.postDetail?.PID?.let { viewModel.sdkClickPost(it) }
+
         // 联网现在并设置基本信息
         viewModel.postDetail?.PostOwner?.let { viewModel.sdkGetUserInfo(it) }
 
