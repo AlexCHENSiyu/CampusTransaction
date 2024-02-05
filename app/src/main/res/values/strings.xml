@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">CampusTransaction</string>
+    <string name="app_name">ReSaleIt</string>
     <string name="please_log_in">Please Log in</string>
     <string name="input_email_address">Input Email Address</string>
     <string name="input_password">Input Password</string>
     <string name="please_validate_your_email_address_first">Please validate your email address first!</string>
     <string name="login">Login</string>
-    <string name="hkust_logo">HKUST_LOGO</string>
+    <string name="hkust_logo">WATERLOO_LOGO</string>
     <string name="start">Start</string>
-    <string name="campus_transaction">Campus Transaction</string>
+    <string name="campus_transaction">ReSaleIt</string>
     <string name="send_validation_code">Send validation code</string>
     <string name="input_valid_code">Input valid code</string>
     <string name="verify">Verify</string>
@@ -66,7 +66,7 @@
     <string name="return_button">Return</string>
     <string name="post">Post</string>
     <string name="photo">Photo</string>
-    <string name="app_about">This application:\nCampus Transaction\n\nIn fulfill of HKUST comp4521\n\nProposed by HKUST students:\n\t\tCHEN, Siyu\n\t\tZheng,Yueyan\n\nSupervised by\n\t\tProfessor.\n\t\tMUPPALA, Kumaraswamy R Jogesh\n\nIn the\nSchool of Computer Engineering\n\nContact us by\n\t\tschendf@connect.ust.hk</string>
+    <string name="app_about">This application:\nReSaleIt\n\nIn fulfillment of University of Waterloo MENG ECE 651, is a cutting-edge second-hand goods transaction app, tailored specifically for the University of Waterloo\'s vibrant community of students and staff. Building on the foundation of a previous application project, ReSaleIt aims to streamline the process of buying and selling second-hand items within the campus, making it more efficient and secure than ever.\n\nProposed by group 2 members:\n    Chen Siyu\n    Qian Runfeng\n    Zhang Xiaoliang\n    Wang Sinan</string>
     <string name="title_activity_favorite">FavoriteActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -77,8 +77,77 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="labels">Choose\nLabels</string>
-    <string name="Tutorial_for_Beginners">Tutorial for Beginners\n\n \t\t1. Welcome to HKUST Campus Transaction! If you would like to search for an item, please enter the name in the search field on the home page and you will see all the items currently for sale.\n\n \t\t2. If you have an item you would like to trade, please click on posts in the toolbar below, then upload the item details and image, click submit and your item will appear in our store.\n\n \t\t3. When you are interested in an item you have the option to initiate a private chat with the seller. All chat messages can be viewed in the toolbar under Message.\n\n \t\t4. If you have forgotten your password, you can reset it using the email address you provided when you registered. Please be assured that the email address you provide will only be used within the app.\n\n \t\t5. If you wish to view or amend your personal information, you can do so by clicking on UserInfo in the toolbar. All personal information can be known and modified in UserInfo.\n\n</string>
-    <string name="Community_Convention">\t\t1. The community is set up to facilitate HKUST students and no one is allowed to use the platform to make a profit from secondary sales.\n\n \t\t2. Neither buyers nor sellers are allowed to disclose any personal information about the other.\n\n \t\t3. No uncivilized language is allowed in the community.\n\n \t\t4. All rights to this software are reserved to the creative team.\n\n</string>
+    <string name="Tutorial_for_Beginners">Tutorial for Beginners\n\n \t\t1. Welcome to ReSaleIt! If you would like to search for an item, please enter the name in the search field on the home page and you will see all the items currently for sale.\n\n \t\t2. If you have an item you would like to trade, please click on posts in the toolbar below, then upload the item details and image, click submit and your item will appear in our store.\n\n \t\t3. When you are interested in an item you have the option to initiate a private chat with the seller. All chat messages can be viewed in the toolbar under Message.\n\n \t\t4. If you have forgotten your password, you can reset it using the email address you provided when you registered. Please be assured that the email address you provide will only be used within the app.\n\n \t\t5. If you wish to view or amend your personal information, you can do so by clicking on UserInfo in the toolbar. All personal information can be known and modified in UserInfo.\n\n</string>
+    <string name="Community_Convention">
+<![CDATA[
+ReSaleIt User Agreement\n\n
+
+Welcome to ReSaleIt!\n\n
+
+By accessing or using the ReSaleIt app, you agree to be bound by the terms and conditions outlined in this User Agreement. This agreement is between you (the user) and ReSaleIt, exclusively for transactions within the University of Waterloo community.\n\n
+
+1. Acceptance of Terms\n\n
+
+By creating an account and using ReSaleIt, you confirm that you are a current student or staff member of the University of Waterloo and agree to comply with this User Agreement.\n\n
+
+2. Account Security\n\n
+
+You are responsible for maintaining the confidentiality of your account and password and for restricting access to your mobile device. You agree to accept responsibility for all activities that occur under your account or password.\n\n
+
+3. User Conduct\n\n
+
+3.1. Respectful Interaction: Users must conduct themselves respectfully and avoid any form of harassment, discrimination, or offensive behavior.\n\n
+3.2. Legitimate Listings: Only legal, non-prohibited items can be listed for sale. Listings must accurately describe the items being sold.\n\n
+3.3. Fair Trading: Users must engage in fair trading practices, including honest representation of items and punctual transaction fulfillment.\n\n
+
+4. Content and Listings\n
+
+4.1. Ownership and Rights: You confirm that all content you provide is yours or you have rights to use it and you grant ReSaleIt a license to use the content for the app\'s functions.\n\n
+4.2. Prohibited Items: The sale of illegal, dangerous, or counterfeit items is strictly prohibited.\n\n
+
+5. Privacy and Data Protection\n\n
+
+ReSaleIt is committed to protecting your privacy. Your personal information will be processed in accordance with our Privacy Policy, which is part of this agreement.\n\n
+
+6. Use of Services\n\n
+
+6.1. Service Modifications: ReSaleIt reserves the right to modify or discontinue, temporarily or permanently, the Service (or any part of it) with or without notice.\n\n
+6.2. Monitoring: ReSaleIt has the right, but not the obligation, to monitor any activity and content associated with its services.\n\n
+
+7. Intellectual Property\n\n
+
+The ReSaleIt name, logos, and app design are trademarks of ReSaleIt and may not be used without the express written permission of ReSaleIt.\n\n
+
+8. Dispute Resolution\n\n
+
+Users agree to resolve any disputes directly through negotiation with the other party. ReSaleIt may provide a platform for dispute resolution but is not obliged to get involved in any disputes.\n\n
+
+9. Limitation of Liability\n\n
+
+ReSaleIt will not be liable for any direct, indirect, incidental, special, or consequential damages arising out of the use of or inability to use the service.\n\n
+
+10. Termination\n\n
+
+ReSaleIt reserves the right to terminate your account or restrict access to the Service for any reason, including violation of this User Agreement.\n\n
+
+11. Amendments to this Agreement\n\n
+
+ReSaleIt may amend this User Agreement at any time by posting a revised version on the app. Your continued use of the app after any amendment signifies your consent to the agreement as amended.\n\n
+
+12. Governing Law\n\n
+
+This User Agreement shall be governed by the laws of Ontario, Canada, without regard to its conflict of law provisions.\n\n
+
+Contact Us\n\n
+
+If you have any questions about this User Agreement, please contact us through the app\'s support feature.\n\n
+
+Acceptance\n\n
+
+By using the ReSaleIt app, you acknowledge that you have read, understood, and agree to be bound by the terms of this User Agreement.
+]]>
+</string>
+
     <string name="favorite">my\nfavorite</string>
     <string name="post_history">Post\nHistory</string>
 </resources>
