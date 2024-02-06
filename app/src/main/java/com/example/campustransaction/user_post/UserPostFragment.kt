@@ -17,6 +17,8 @@ import com.example.campustransaction.databinding.FragmentUserPostBinding
 import com.example.campustransaction.ui.UIViewModel
 import com.example.campustransaction.user_post.adapter.PostAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import androidx.navigation.fragment.findNavController
+import com.example.campustransaction.user_post.UserPostFragmentDirections
 
 
 class UserPostFragment : Fragment() {
@@ -88,15 +90,23 @@ class UserPostFragment : Fragment() {
 
     private fun askDeletePost(pid: String){
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Delete this post?")
-            .setMessage("Are you sure to delete this post?")
+            .setTitle("Choose an option")
+            .setMessage("Do you want to delete or edit the post?")
             .setCancelable(false)
-            .setNegativeButton("DON'T DELETE") { _, _ -> unDeletePost() }
+            .setNegativeButton("CANCEL") { _, _ -> unDeletePost() }
             .setPositiveButton("DELETE") {_, _ -> deletePost(pid) }
+            .setNeutralButton("EDIT") { _, _ -> editPost(pid) }
             .show()
     }
 
     private fun unDeletePost(){}
+    private fun editPost(pid: String) {
+        val action = UserPostFragmentDirections.actionUserPostFragmentToEditPostFragment(pid)
+        findNavController().navigate(action)
+
+
+    }
+
 
     private fun deletePost(pid: String){
         viewModel.sdkDeletePost(pid)

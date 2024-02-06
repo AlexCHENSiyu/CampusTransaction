@@ -120,11 +120,15 @@
         android:label="User Post"
         tools:layout="@layout/fragment_user_post" >
         <action
+            android:id="@+id/actionUserPostFragmentToEditPostFragment"
+            app:destination="@id/editPostFragment" />
+        <action
             android:id="@+id/action_myPostFragment_to_userInfoNavigation"
             app:destination="@id/userInfoNavigation" />
         <action
             android:id="@+id/action_userPostFragment_to_postDetailFragment"
             app:destination="@id/postDetailFragment" />
+
     </fragment>
     <activity
         android:id="@+id/favoriteActivity"
@@ -189,5 +193,12 @@
             android:id="@+id/action_postHistoryFragment_to_postDetailFragment"
             app:destination="@id/postDetailFragment" />
     </fragment>
-
+    <fragment
+        android:id="@+id/editPostFragment"
+        android:name="com.example.campustransaction.EditPostFragment"
+        android:label="Edit Post"
+        tools:layout="@layout/fragment_edit_post" />
+    <argument
+        android:name="pid"
+        app:argType="string" />
 </navigation>
