@@ -197,8 +197,10 @@
         android:id="@+id/editPostFragment"
         android:name="com.example.campustransaction.EditPostFragment"
         android:label="Edit Post"
-        tools:layout="@layout/fragment_edit_post" />
-    <argument
-        android:name="pid"
-        app:argType="string" />
+        tools:layout="@layout/fragment_edit_post" >
+        <argument
+            android:name="pid"
+            app:argType="string" />
+    </fragment>
+
 </navigation>
