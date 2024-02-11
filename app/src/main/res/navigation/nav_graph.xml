@@ -44,15 +44,15 @@
         <argument
             android:name="EmailAddress"
             app:argType="string"
-            android:defaultValue="Default_EmailAddress" />
+            android:defaultValue="Default" />
         <argument
             android:name="Password"
             app:argType="string"
-            android:defaultValue="Default_Password" />
+            android:defaultValue="Default" />
     </activity>
     <fragment
         android:id="@+id/createAccountFragment"
-        android:name="com.example.campustransaction.create_account.CreateAccountFragment"
+        android:name="com.example.campustransaction.welcome.create_account.CreateAccountFragment"
         android:label="CreateAccountFragment"
         tools:layout="@layout/fragment_create_account">
         <action
@@ -63,7 +63,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.campustransaction.login.LoginFragment"
+        android:name="com.example.campustransaction.welcome.login.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login">
         <action
@@ -77,7 +77,7 @@
     </fragment>
     <fragment
         android:id="@+id/resetPasswordFragment"
-        android:name="com.example.campustransaction.reset_password.ResetPasswordFragment"
+        android:name="com.example.campustransaction.ui.userInfo.reset_password.ResetPasswordFragment"
         android:label="ResetPasswordFragment"
         tools:layout="@layout/fragment_reset_password">
         <action

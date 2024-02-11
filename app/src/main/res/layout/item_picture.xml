@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
    <!--- <com.yt.kangaroo.widgets.zoomable.ZoomableDraweeView -->
-    <com.example.campustransaction.user_post.widget.ShapeXfermodeImageView
+    <com.example.campustransaction.ui.posts.user_post.widget.ShapeXfermodeImageView
         android:id="@+id/post_list_picture"
         android:layout_width="300dp"
         android:layout_height="300dp"

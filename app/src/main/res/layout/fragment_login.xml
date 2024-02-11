@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.campustransaction.login.LoginViewModel" />
+            type="com.example.campustransaction.welcome.login.LoginViewModel" />
     </data>
 
     <FrameLayout

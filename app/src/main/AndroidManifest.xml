@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.campustransaction">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
@@ -38,7 +42,7 @@
             android:exported="false"
             android:label="ReSaleIt" />
         <activity
-            android:name=".favorite.FavoriteActivity"
+            android:name=".ui.userInfo.favorite.FavoriteActivity"
             android:exported="false"
             android:label="@string/title_activity_favorite"
             android:theme="@style/Theme.CampusTransaction.NoActionBar" />

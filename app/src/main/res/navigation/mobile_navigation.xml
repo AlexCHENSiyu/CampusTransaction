@@ -71,7 +71,7 @@
 
     <fragment
         android:id="@+id/resetPassword2Fragment"
-        android:name="com.example.campustransaction.reset_password.ResetPassword2Fragment"
+        android:name="com.example.campustransaction.ui.userInfo.reset_password.ResetPassword2Fragment"
         android:label="Reset Password"
         tools:layout="@layout/fragment_reset_password2">
         <action
@@ -82,7 +82,7 @@
     </fragment>
     <fragment
         android:id="@+id/personalCenterFragment"
-        android:name="com.example.campustransaction.personal_center.PersonalCenterFragment"
+        android:name="com.example.campustransaction.ui.userInfo.personal_center.PersonalCenterFragment"
         android:label="Personal Center"
         tools:layout="@layout/fragment_personal_center">
         <action
@@ -96,7 +96,7 @@
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="com.example.campustransaction.about.AboutFragment"
+        android:name="com.example.campustransaction.ui.userInfo.about.AboutFragment"
         android:label="About"
         tools:layout="@layout/fragment_about" >
         <action
@@ -106,7 +106,7 @@
     </fragment>
     <fragment
         android:id="@+id/photoFragment"
-        android:name="com.example.campustransaction.photo.PhotoFragment"
+        android:name="com.example.campustransaction.ui.userInfo.photo.PhotoFragment"
         android:label="Photo"
         tools:layout="@layout/fragment_photo" />
     <activity
@@ -116,7 +116,7 @@
         tools:layout="@layout/activity_main" />
     <fragment
         android:id="@+id/userPostFragment"
-        android:name="com.example.campustransaction.user_post.UserPostFragment"
+        android:name="com.example.campustransaction.ui.posts.user_post.UserPostFragment"
         android:label="User Post"
         tools:layout="@layout/fragment_user_post" >
         <action
@@ -128,7 +128,7 @@
     </fragment>
     <activity
         android:id="@+id/favoriteActivity"
-        android:name="com.example.campustransaction.favorite.FavoriteActivity"
+        android:name="com.example.campustransaction.ui.userInfo.favorite.FavoriteActivity"
         android:label="Favorite"
         tools:layout="@layout/activity_favorite" >
 <!--        <argument-->
@@ -140,7 +140,7 @@
     </activity>
     <fragment
         android:id="@+id/postDetailFragment"
-        android:name="com.example.campustransaction.user_post.PostDetailFragment"
+        android:name="com.example.campustransaction.ui.posts.user_post.PostDetailFragment"
         android:label="Post Detail"
         tools:layout="@layout/fragment_post_detail">
         <action
@@ -153,7 +153,7 @@
     </fragment>
     <fragment
         android:id="@+id/otherPersonalCenterFragment"
-        android:name="com.example.campustransaction.personal_center.OtherPersonalCenterFragment"
+        android:name="com.example.campustransaction.ui.userInfo.personal_center.OtherPersonalCenterFragment"
         android:label="Other Personal Center"
         tools:layout="@layout/fragment_other_personal_center">
         <action
@@ -182,7 +182,7 @@
         tools:layout="@layout/fragment_banner_detail"/>
     <fragment
         android:id="@+id/postHistoryFragment"
-        android:name="com.example.campustransaction.user_post.PostHistoryFragment"
+        android:name="com.example.campustransaction.ui.posts.user_post.PostHistoryFragment"
         android:label="PostHistoryFragment"
         tools:layout="@layout/fragment_post_history">
         <action

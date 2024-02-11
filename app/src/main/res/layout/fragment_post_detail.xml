@@ -12,7 +12,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".user_post.PostDetailFragment">
+        tools:context=".ui.posts.user_post.PostDetailFragment">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/post_detail_nest"
