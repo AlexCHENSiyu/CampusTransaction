@@ -102,7 +102,10 @@ class UserPostFragment : Fragment() {
     private fun unDeletePost(){}
     private fun editPost(pid: String) {
         val action = UserPostFragmentDirections.actionUserPostFragmentToEditPostFragment(pid)
+        Log.d("UserPostFragment", "editPost called with pid: $pid")
+
         findNavController().navigate(action)
+
 
 
     }

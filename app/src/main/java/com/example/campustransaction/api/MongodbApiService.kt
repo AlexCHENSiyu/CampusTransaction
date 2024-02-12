@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 
-private const val BASE_URL = "http://18.162.214.19/chen/"
+private const val BASE_URL = "http://10.0.2.2:5000"
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(ScalarsConverterFactory.create())
@@ -81,6 +81,16 @@ interface MongodbApiService {
 
     @GET("get-post-history")
     suspend fun apiPostHistory(@Query("EmailAddress") EmailAddress:String): ResponsePosts
+
+    @Multipart
+    @POST("edit-post")
+    suspend fun apiEditPost(@Part("EmailAddress") EmailAddress:String,
+                              @Part("Password") Password:String?,
+                              @Part("PID") PID:String): ResponseBasic
+    @Multipart
+    @POST("parsing-pid")
+    suspend fun apiParsingpid(@Part("PID") PID:String): ResponseBasic
+
 
 }
 

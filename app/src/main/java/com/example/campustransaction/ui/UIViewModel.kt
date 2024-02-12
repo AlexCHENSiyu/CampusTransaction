@@ -217,6 +217,30 @@ class UIViewModel : ViewModel() {
         }
     }
 
+    private val _responseEditPost = MutableLiveData<ResponseBasic>()
+    val responseEditPost: LiveData<ResponseBasic>
+        get() = _responseEditPost
+    fun sdkEditPost(PID: String){
+        Log.d("sdkEditPost", "Function called with pid: $PID")
+        viewModelScope.launch {
+            try {
+                _responseEditPost.value = MongodbApi.retrofitService.apiEditPost(myUserInfo.EmailAddress, myUserInfo.Password, PID)
+
+                Log.d("sdkEditPost","Success")
+            } catch (e: Exception) {
+                _responseEditPost.value = ResponseBasic(Success = false, Error = "Failure: ${e.message}")
+                Log.d("sdkEditPost", "Failure: ${e.message}")
+            }
+        }
+    }
+
+    fun sdkParsingPID(PID:String){
+
+        Log.d("sdkEditPost", "Function called with pid: $PID")
+    }
+
+
+
     // 发送消息
     private val _responseSendMessage = MutableLiveData<ResponseBasic>()
     val responseSendMessage: LiveData<ResponseBasic>
