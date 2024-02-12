@@ -94,10 +94,13 @@ class UserPostFragment : Fragment() {
             .setMessage("Do you want to delete or edit the post?")
             .setCancelable(false)
             .setNegativeButton("CANCEL") { _, _ -> unDeletePost() }
-            .setPositiveButton("DELETE") {_, _ -> deletePost(pid) }
+            .setPositiveButton("DELETE") { _, _ -> deletePost(pid) }
             .setNeutralButton("EDIT") { _, _ -> editPost(pid) }
+            .setNeutralButton("SOLD") { _, _ -> soldPost(pid) }
             .show()
     }
+
+    private fun soldPost(pid: String){}
 
     private fun unDeletePost(){}
     private fun editPost(pid: String) {

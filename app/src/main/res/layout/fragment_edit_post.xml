@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:background="@color/design_default_color_primary"
             android:gravity="center_horizontal"
-            android:text="@string/add_post"
+            android:text="Edit Post"
             android:textColor="@color/colorWhite"
             android:textSize="50sp"
             android:textStyle="bold" />
