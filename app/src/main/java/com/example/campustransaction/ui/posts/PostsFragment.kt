@@ -15,6 +15,12 @@ import com.example.campustransaction.api.RequestPost
 import com.example.campustransaction.databinding.FragmentPostsBinding
 import com.example.campustransaction.ui.UIViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import androidx.core.net.toUri
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.File
 
 class PostsFragment : Fragment() {
     private val viewModel: UIViewModel by activityViewModels()
@@ -46,11 +52,10 @@ class PostsFragment : Fragment() {
             binding.textDescription.setText("")
             binding.textPrice.setText("")
         }
-        if (viewModel.postPhotoUri1 != null) {binding.buttonPhoto1.setImageURI(viewModel.postPhotoUri1);binding.buttonPhoto1.tag = "Selected"}
-        if (viewModel.postPhotoUri2 != null) {binding.buttonPhoto2.setImageURI(viewModel.postPhotoUri2);binding.buttonPhoto2.tag = "Selected"}
-        if (viewModel.postPhotoUri3 != null) {binding.buttonPhoto3.setImageURI(viewModel.postPhotoUri3);binding.buttonPhoto3.tag = "Selected"}
-        if (viewModel.postPhotoUri4 != null) {binding.buttonPhoto4.setImageURI(viewModel.postPhotoUri4);binding.buttonPhoto4.tag = "Selected"}
-
+        if (viewModel.postPhotoUri1 != null) {binding.buttonPhoto1.setImageURI(viewModel.postPhotoUri1); binding.buttonPhoto1.tag = "Selected"}
+        if (viewModel.postPhotoUri2 != null) {binding.buttonPhoto2.setImageURI(viewModel.postPhotoUri2); binding.buttonPhoto2.tag = "Selected"}
+        if (viewModel.postPhotoUri3 != null) {binding.buttonPhoto3.setImageURI(viewModel.postPhotoUri3); binding.buttonPhoto3.tag = "Selected"}
+        if (viewModel.postPhotoUri4 != null) {binding.buttonPhoto4.setImageURI(viewModel.postPhotoUri4); binding.buttonPhoto4.tag = "Selected"}
 
         // 申请相机和图库读写权限
         context?.let { viewModel.onRequestPermissions(it) }
