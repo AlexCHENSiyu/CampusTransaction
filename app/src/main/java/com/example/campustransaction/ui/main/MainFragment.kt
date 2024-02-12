@@ -20,7 +20,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.campustransaction.R
 import com.example.campustransaction.databinding.FragmentMainBinding
 import com.example.campustransaction.ui.UIViewModel
-import com.example.campustransaction.user_post.adapter.PostAdapter
+import com.example.campustransaction.ui.posts.user_post.adapter.PostAdapter
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator

@@ -28,8 +28,8 @@ class PostsFragment : Fragment() {
     private var timer3: TimerUnit? = null
     private var timer4: TimerUnit? = null
     // post的labels
-    private val labelsArray = arrayOf("Personal Computer", "Phone", "Digital", "Food&Drink", "Books", "Medicine","Bags","Sports","Fruits","Luxury","Sports","Auction","Lost&Found","Jewelry","Watches")
-    private val checkedLabelsArray = booleanArrayOf(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false)
+    private val labelsArray = arrayOf("Personal Computer", "Phone", "Digital", "Food&Drink", "Books", "Medicine","Bags","Sports","Fruits","Luxury","Sports","Jewelry","Watches")
+    private val checkedLabelsArray = booleanArrayOf(false, false, false, false, false, false, false, false, false, false, false, false, false)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPostsBinding.inflate(inflater)
@@ -180,7 +180,7 @@ class PostsFragment : Fragment() {
             if(binding.textTitle.text == null || binding.textTitle.text.toString() == ""){
                 Toast.makeText(context, "You must have a Title", Toast.LENGTH_SHORT).show()
             }else if (binding.textDescription.text == null || binding.textDescription.text.toString() == ""){
-                Toast.makeText(context, "You must have a Text", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "You must have a Description", Toast.LENGTH_SHORT).show()
             }else if (binding.textPrice.text == null || binding.textPrice.text.toString() == ""){
                 Toast.makeText(context, "You must have a Price", Toast.LENGTH_SHORT).show()
             }else{
@@ -249,10 +249,15 @@ class PostsFragment : Fragment() {
 
     // 保存帖子
     private fun savePost(){
-        viewModel.myNewPost = RequestPost(PostOwner = viewModel.myUserInfo.EmailAddress,
+        viewModel.myNewPost = RequestPost(
+            PostOwner = viewModel.myUserInfo.EmailAddress,
             Title = binding.textTitle.text.toString(),
             Text = binding.textDescription.text.toString(),
-            Price = binding.textPrice.text.toString().toDoubleOrNull())
+            Price = binding.textPrice.text.toString().toDoubleOrNull(),
+            Auction = false,
+            LostFound = false
+        )
+
         when (binding.spinnerType.selectedItem.toString())
         {
             "Auction"-> viewModel.myNewPost!!.Auction = true
@@ -301,7 +306,6 @@ class PostsFragment : Fragment() {
         viewModel.postPhotoUri4 = null
         lastPhoto = 0
     }
-
 
     // 长按显示删除按钮
     private fun showDeleteButton(){

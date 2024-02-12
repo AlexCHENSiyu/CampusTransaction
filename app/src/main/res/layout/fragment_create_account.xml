@@ -7,13 +7,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.campustransaction.create_account.CreateAccountViewModel" />
+            type="com.example.campustransaction.welcome.create_account.CreateAccountViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".create_account.CreateAccountFragment">
+        tools:context=".welcome.create_account.CreateAccountFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

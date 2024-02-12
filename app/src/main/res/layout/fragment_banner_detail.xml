@@ -16,12 +16,18 @@
         android:paddingTop="10dp"
         tools:context=".ui.main.BannerDetailFragment">
 
-        <TextView
-            android:id="@+id/banner_detail"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/Community_Convention"
-            android:textSize="20sp"/>
+            android:fillViewport="true">
+
+            <TextView
+                android:id="@+id/banner_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/Community_Convention"
+                android:textSize="15sp"/>
+        </ScrollView>
 
     </FrameLayout>
 </layout>

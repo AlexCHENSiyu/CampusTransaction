@@ -11,7 +11,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".personal_center.OtherPersonalCenterFragment">
+        tools:context=".ui.userInfo.personal_center.OtherPersonalCenterFragment">
 
         <LinearLayout
             android:layout_width="match_parent"

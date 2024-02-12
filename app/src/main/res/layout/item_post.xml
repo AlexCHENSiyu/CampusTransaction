@@ -7,7 +7,7 @@
     android:paddingBottom="10dp"
     android:paddingTop="10dp">
 
-    <com.example.campustransaction.user_post.widget.ShapeXfermodeImageView
+    <com.example.campustransaction.ui.posts.user_post.widget.ShapeXfermodeImageView
         android:id="@+id/image_post"
         android:layout_width="150dp"
         android:layout_height="150dp"
