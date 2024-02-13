@@ -202,6 +202,21 @@ class UIViewModel : ViewModel() {
             }
         }
     }
+    // 主页获取更多评论
+    fun sdkGetMorePosts(Keyword:String? = null) {
+        viewModelScope.launch {
+            try {
+                val tempPosts = responseGetPosts.value?.Posts
+                val tempResponse = MongodbApi.retrofitService.apiGetPosts(myUserInfo.EmailAddress, Keyword)
+                tempResponse.Posts?.let { tempPosts?.addAll(it) }
+                _responseGetPosts.value = ResponsePosts(Success = _responseGetPosts.value!!.Success, Posts = tempPosts)
+                Log.d("sdkGetMorePosts","Success with length ${_responseGetPosts.value?.Posts?.size}")
+            } catch (e: Exception) {
+                _responseGetPosts.value = ResponsePosts(Success = false, Error = "Failure: ${e.message}")
+                Log.d("sdkGetMorePosts", "Failure: ${e.message}")
+            }
+        }
+    }
 
     // 删除本人的帖子
     private val _responseDeletePost = MutableLiveData<ResponseBasic>()
@@ -379,7 +394,6 @@ class UIViewModel : ViewModel() {
     }
 
     private fun compressImage(context: Context, uri: Uri): ByteArray? {
-
         // 将图片转换为 bitmap
         val bitmapImg = BitmapFactory.decodeStream(context.contentResolver.openInputStream(uri))
 
