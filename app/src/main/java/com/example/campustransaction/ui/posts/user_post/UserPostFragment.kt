@@ -91,8 +91,9 @@ class UserPostFragment : Fragment() {
             .setTitle("Delete this post?")
             .setMessage("Are you sure to delete this post?")
             .setCancelable(false)
-            .setNegativeButton("DON'T DELETE") { _, _ -> unDeletePost() }
+            .setNegativeButton("CANCEL") {_, _ -> unDeletePost() }
             .setPositiveButton("DELETE") {_, _ -> deletePost(pid) }
+                .setNeutralButton("SOLD") {_, _ -> soldPost(pid) }
             .show()
     }
 
@@ -103,6 +104,10 @@ class UserPostFragment : Fragment() {
         Log.d("UserPostFragment","deletePost")
     }
 
+    private fun soldPost(pid: String){
+        viewModel.sdkSoldPost(pid)
+        Log.d("UserPostFragment","soldPost")
+    }
 }
 
 class SpaceItemDecoration(private val space: Int) : ItemDecoration() {
