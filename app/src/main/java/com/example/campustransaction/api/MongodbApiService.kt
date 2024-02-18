@@ -62,6 +62,12 @@ interface MongodbApiService {
                               @Part("Password") Password:String?,
                               @Part("PID") PID:String): ResponseBasic
 
+    @Multipart
+    @POST("sold-post")
+    suspend fun apiSoldPost(@Part("EmailAddress") EmailAddress:String,
+                                  @Part("Password") Password:String,
+                                  @Part("PID") PID:String): ResponseBasic
+
     @GET("user-posts")
     suspend fun apiUserPosts(@Query("EmailAddress") EmailAddress:String): ResponsePosts
 

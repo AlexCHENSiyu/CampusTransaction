@@ -217,6 +217,27 @@ class UIViewModel : ViewModel() {
         }
     }
 
+    // mark post as sold
+    private val _responseMarkPostAsSold = MutableLiveData<ResponseBasic>()
+    val responseMarkPostAsSold: LiveData<ResponseBasic>
+        get() = _responseMarkPostAsSold
+    fun sdkSoldPost(PID: String) {
+        viewModelScope.launch {
+            try {
+                val response = MongodbApi.retrofitService.apiSoldPost(
+                        myUserInfo.EmailAddress,
+                        myUserInfo.Password,
+                        PID
+                )
+                _responseMarkPostAsSold.value = response
+                Log.d("sdkSoldPost", "Success")
+            } catch (e: Exception) {
+                _responseMarkPostAsSold.value = ResponseBasic(Success = false, Error = "Failure: ${e.message}")
+                Log.d("sdkSoldPost", "Failure: ${e.message}")
+            }
+        }
+    }
+
     // 发送消息
     private val _responseSendMessage = MutableLiveData<ResponseBasic>()
     val responseSendMessage: LiveData<ResponseBasic>
