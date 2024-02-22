@@ -5,6 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 
+//private const val BASE_URL = "http://10.0.2.2:5000"
 private const val BASE_URL = "http://18.162.214.19/chen/"
 
 private val retrofit = Retrofit.Builder()
