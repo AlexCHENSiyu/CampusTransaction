@@ -28,6 +28,8 @@ import com.example.campustransaction.api.ResponsePosts
 import com.example.campustransaction.api.ResponseUserInfo
 import kotlinx.coroutines.launch
 import java.io.BufferedOutputStream
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -164,7 +166,7 @@ class UIViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 _responseUserPosts.value = ResponsePosts(Success = false, Error = "Failure: ${e.message}")
-                Log.d("sdkNewPost", "Failure: ${e.message}")
+                Log.d("sdkUserPosts", "Failure: ${e.message}" + " postOwner: $postOwner")
             }
         }
     }
@@ -193,10 +195,25 @@ class UIViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _responseGetPosts.value = MongodbApi.retrofitService.apiGetPosts(myUserInfo.EmailAddress, Keyword)
-                Log.d("sdkPostComment","Success")
+                Log.d("sdkGetPosts","Success")
             } catch (e: Exception) {
                 _responseGetPosts.value = ResponsePosts(Success = false, Error = "Failure: ${e.message}")
-                Log.d("sdkPostComment", "Failure: ${e.message}")
+                Log.d("sdkGetPosts", "Failure: ${e.message}")
+            }
+        }
+    }
+    // 主页获取更多评论
+    fun sdkGetMorePosts(Keyword:String? = null) {
+        viewModelScope.launch {
+            try {
+                val tempPosts = responseGetPosts.value?.Posts
+                val tempResponse = MongodbApi.retrofitService.apiGetPosts(myUserInfo.EmailAddress, Keyword)
+                tempResponse.Posts?.let { tempPosts?.addAll(it) }
+                _responseGetPosts.value = ResponsePosts(Success = _responseGetPosts.value!!.Success, Posts = tempPosts)
+                Log.d("sdkGetMorePosts","Success with length ${_responseGetPosts.value?.Posts?.size}")
+            } catch (e: Exception) {
+                _responseGetPosts.value = ResponsePosts(Success = false, Error = "Failure: ${e.message}")
+                Log.d("sdkGetMorePosts", "Failure: ${e.message}")
             }
         }
     }
@@ -246,10 +263,10 @@ class UIViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _responseSendMessage.value = newMessage?.let { MongodbApi.retrofitService.apiSendMessage(it) }
-                Log.d("sdkDeletePost","Success")
+                Log.d("sdkSendMessage","Success")
             } catch (e: Exception) {
                 _responseSendMessage.value = ResponseBasic(Success = false, Error = "Failure: ${e.message}")
-                Log.d("sdkDeletePost", "Failure: ${e.message}")
+                Log.d("sdkSendMessage", "Failure: ${e.message}")
             }
         }
     }
@@ -262,10 +279,10 @@ class UIViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _responseGetMessage.value = MongodbApi.retrofitService.apiGetMessage(myUserInfo.EmailAddress, myUserInfo.Password, Sender)
-                Log.d("sdkDeletePost","Success")
+                Log.d("sdkGetMessage","Success")
             } catch (e: Exception) {
                 _responseGetMessage.value = ResponseMessages(Success = false, Error = "Failure: ${e.message}")
-                Log.d("sdkDeletePost", "Failure: ${e.message}")
+                Log.d("sdkGetMessage", "Failure: ${e.message}")
             }
         }
     }
@@ -294,10 +311,10 @@ class UIViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _responsePostHistory.value = MongodbApi.retrofitService.apiPostHistory(myUserInfo.EmailAddress)
-                Log.d("sdkDeletePost","Success")
+                Log.d("sdkPostHistory","Success")
             } catch (e: Exception) {
                 _responsePostHistory.value = ResponsePosts(Success = false, Error = "Failure: ${e.message}")
-                Log.d("sdkDeletePost", "Failure: ${e.message}")
+                Log.d("sdkPostHistory", "Failure: ${e.message}")
             }
         }
     }
@@ -308,7 +325,8 @@ class UIViewModel : ViewModel() {
     fun getBase64ForUri(context: Context, uri: Uri): String {
         var encodedBase64: String? = ""
         try {
-            val bytes = context.contentResolver.openInputStream(uri)?.readBytes()
+//          val bytes = context.contentResolver.openInputStream(uri)?.readBytes()
+            val bytes = compressImage(context, uri)  // 压缩图片
             encodedBase64 = Base64.encodeToString(bytes, Base64.DEFAULT)
         } catch (e1: IOException) {
             e1.printStackTrace()
@@ -364,6 +382,72 @@ class UIViewModel : ViewModel() {
 
         Log.d("saveFile2","filename=${file.absolutePath}")
         return file
+    }
+
+    // 压缩图片
+    private fun compressImageToBytes(image: Bitmap): ByteArray? {
+        val bos = ByteArrayOutputStream()
+        image.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+        var options = 90
+        val length = bos.toByteArray().size / 1024
+
+        if (length > 5000) {
+            bos.reset()
+            image.compress(Bitmap.CompressFormat.JPEG, 10, bos)
+        } else if (length > 4000) {
+            bos.reset()
+            image.compress(Bitmap.CompressFormat.JPEG, 20, bos)
+        } else if (length > 3000) {
+            bos.reset()
+            image.compress(Bitmap.CompressFormat.JPEG, 50, bos)
+        } else if (length > 2000) {
+            bos.reset()
+            image.compress(Bitmap.CompressFormat.JPEG, 70, bos)
+        }
+
+        while (bos.toByteArray().size / 1024 > 1024) {
+            bos.reset()
+            image.compress(Bitmap.CompressFormat.JPEG, options, bos)
+            options -= 10
+        }
+
+        return bos.toByteArray()
+    }
+
+    private fun compressImage(context: Context, uri: Uri): ByteArray? {
+        // 将图片转换为 bitmap
+        val bitmapImg = BitmapFactory.decodeStream(context.contentResolver.openInputStream(uri))
+
+        val bos = ByteArrayOutputStream()
+        bitmapImg.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+
+        if (bos.toByteArray().size / 1024 > 1024) {
+            bos.reset()
+            bitmapImg.compress(Bitmap.CompressFormat.JPEG, 50, bos)
+        }
+        val newOpts = BitmapFactory.Options()
+        newOpts.inJustDecodeBounds = true
+        newOpts.inJustDecodeBounds = false
+
+        val w = newOpts.outWidth
+        val h = newOpts.outHeight
+        val hh = 800f
+        val ww = 480f
+        var be = 1
+
+        if (w > h && w > ww) {
+            be = (newOpts.outWidth / ww).toInt()
+        } else if (w < h && h > hh) {
+            be = (newOpts.outHeight / hh).toInt()
+        }
+
+        if (be <= 0) be = 1
+        newOpts.inSampleSize = be
+
+        val isBm = ByteArrayInputStream(bos.toByteArray())
+        val bitmap = BitmapFactory.decodeStream(isBm, null, newOpts)
+
+        return compressImageToBytes(bitmap!!)
     }
 
     // 权限申请

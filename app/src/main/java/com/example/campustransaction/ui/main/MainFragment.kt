@@ -1,6 +1,8 @@
 package com.example.campustransaction.ui.main
 
+import android.annotation.SuppressLint
 import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -9,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -37,6 +40,8 @@ class MainFragment : Fragment(){
         Log.d("MainFragment", "Password2:"+ viewModel.myUserInfo.Password)
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
+    @SuppressLint("RestrictedApi")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
@@ -51,7 +56,17 @@ class MainFragment : Fragment(){
             viewModel.sdkGetPosts()
         }
 
-        // 设置横幅
+        binding.mainNest.setOnScrollChangeListener {_, _, scrollY, _, _ ->
+            if (binding.mainNest.computeVerticalScrollExtent() +
+                binding.mainNest.computeVerticalScrollOffset() >=
+                binding.mainNest.computeVerticalScrollRange()) {
+                // 已经滑到底部
+                Toast.makeText(context, "OnScrollChange", Toast.LENGTH_SHORT).show()
+                viewModel.sdkGetMorePosts()
+            }
+        }
+
+        // 设置横幅Adapter
         binding.banner.setAdapter(object : BannerImageAdapter<BannerDataBean>(BannerDataBean.testData3) {
             override fun onBindView(holder: BannerImageHolder, data: BannerDataBean, position: Int, size: Int) {
                 //图片加载自己实现
@@ -63,6 +78,7 @@ class MainFragment : Fragment(){
 
         }).addBannerLifecycleObserver(this).indicator = CircleIndicator(context)
 
+        // 设置横幅
         binding.banner.setOnBannerListener { _, position ->
             if(position != 0){
                 viewModel.bannerIndex = position
@@ -97,6 +113,7 @@ class MainFragment : Fragment(){
         // 设置帖子列表
         viewModel.responseGetPosts.observe(viewLifecycleOwner){
             binding.swipeRefreshLayout.isRefreshing = false
+            Toast.makeText(context, "observe activate", Toast.LENGTH_SHORT).show()
 
             if (viewModel.responseGetPosts.value?.Success == true){
                 val postList = viewModel.responseGetPosts.value!!.Posts
@@ -109,7 +126,6 @@ class MainFragment : Fragment(){
                         viewModel.postDetail = viewModel.responseGetPosts.value!!.Posts?.get(position)
                         viewModel.postOwner = viewModel.postDetail!!.PostOwner
                         //Toast.makeText(context, "PostOwner: ${viewModel.postDetail?.PostOwner}", Toast.LENGTH_SHORT).show()
-
                         view.findNavController().navigate(R.id.action_mainNavigation_to_postDetailFragment)
                     }
                     override fun onItemLongClick(view: View, position: Int) {

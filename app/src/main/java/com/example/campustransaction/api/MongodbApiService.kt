@@ -1,17 +1,25 @@
 package com.example.campustransaction.api
 
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
+import java.util.concurrent.TimeUnit
 
 //private const val BASE_URL = "http://10.0.2.2:5000"
 private const val BASE_URL = "http://18.162.214.19/chen/"
+
+private val okHttpClient = OkHttpClient.Builder()
+    .readTimeout(60, TimeUnit.SECONDS)
+    .connectTimeout(60, TimeUnit.SECONDS)
+    .build()
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(ScalarsConverterFactory.create())
     .addConverterFactory(GsonConverterFactory.create())
     .baseUrl(BASE_URL)
+    .client(okHttpClient)
     .build()
 
 interface MongodbApiService {
