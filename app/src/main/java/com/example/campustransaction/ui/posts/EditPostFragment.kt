@@ -16,6 +16,13 @@ import com.example.campustransaction.databinding.FragmentEditPostBinding
 import com.example.campustransaction.databinding.FragmentPostsBinding
 import com.example.campustransaction.ui.UIViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.*
+
+
+
 
 class EditPostFragment  : Fragment() {
     private val viewModel: UIViewModel by activityViewModels()
@@ -239,8 +246,8 @@ class EditPostFragment  : Fragment() {
             }
         }
 
-        // Post按钮监听
-        binding.buttonPost.setOnClickListener {
+        // Upload按钮监听
+        binding.buttonUpload.setOnClickListener {
             if (binding.textTitle.text == null || binding.textTitle.text.toString() == "") {
                 Toast.makeText(context, "You must have a Title", Toast.LENGTH_SHORT).show()
             } else if (binding.textDescription.text == null || binding.textDescription.text.toString() == "") {
@@ -249,62 +256,86 @@ class EditPostFragment  : Fragment() {
                 Toast.makeText(context, "You must have a Price", Toast.LENGTH_SHORT).show()
             } else {
                 // 保存帖子
-                savePost()
-                // 保存图片
-                val base64FromPostPhoto1 = context?.let {
-                    viewModel.postPhotoUri1?.let { it1 ->
-                        viewModel.getBase64ForUri(
-                            it,
-                            it1
-                        )
-                    }
-                }
-                val base64FromPostPhoto2 = context?.let {
-                    viewModel.postPhotoUri2?.let { it1 ->
-                        viewModel.getBase64ForUri(
-                            it,
-                            it1
-                        )
-                    }
-                }
-                val base64FromPostPhoto3 = context?.let {
-                    viewModel.postPhotoUri3?.let { it1 ->
-                        viewModel.getBase64ForUri(
-                            it,
-                            it1
-                        )
-                    }
-                }
-                val base64FromPostPhoto4 = context?.let {
-                    viewModel.postPhotoUri4?.let { it1 ->
-                        viewModel.getBase64ForUri(
-                            it,
-                            it1
-                        )
-                    }
-                }
-                val photoList: MutableList<String> = mutableListOf()
-                if (base64FromPostPhoto1 != "") {
-                    base64FromPostPhoto1?.let { it1 -> photoList.add(it1) }
-                }
-                if (base64FromPostPhoto2 != "") {
-                    base64FromPostPhoto2?.let { it1 -> photoList.add(it1) }
-                }
-                if (base64FromPostPhoto3 != "") {
-                    base64FromPostPhoto3?.let { it1 -> photoList.add(it1) }
-                }
-                if (base64FromPostPhoto4 != "") {
-                    base64FromPostPhoto4?.let { it1 -> photoList.add(it1) }
-                }
-                viewModel.myNewPost?.Images = photoList
-                // Log.d("sdkNewPost1", photoList.toString())
 
-                // 上传新帖子
-                viewModel.sdkEditPost(pid)
+
+
+
+                    savePost()
+                    // 保存图片
+                    val base64FromPostPhoto1 = context?.let {
+                        viewModel.postPhotoUri1?.let { it1 ->
+                            viewModel.getBase64ForUri(
+                                it,
+                                it1
+                            )
+                        }
+                    }
+                    val base64FromPostPhoto2 = context?.let {
+                        viewModel.postPhotoUri2?.let { it1 ->
+                            viewModel.getBase64ForUri(
+                                it,
+                                it1
+                            )
+                        }
+                    }
+                    val base64FromPostPhoto3 = context?.let {
+                        viewModel.postPhotoUri3?.let { it1 ->
+                            viewModel.getBase64ForUri(
+                                it,
+                                it1
+                            )
+                        }
+                    }
+                    val base64FromPostPhoto4 = context?.let {
+                        viewModel.postPhotoUri4?.let { it1 ->
+                            viewModel.getBase64ForUri(
+                                it,
+                                it1
+                            )
+                        }
+                    }
+                    val photoList: MutableList<String> = mutableListOf()
+                    if (base64FromPostPhoto1 != "") {
+                        base64FromPostPhoto1?.let { it1 -> photoList.add(it1) }
+                    }
+                    if (base64FromPostPhoto2 != "") {
+                        base64FromPostPhoto2?.let { it1 -> photoList.add(it1) }
+                    }
+                    if (base64FromPostPhoto3 != "") {
+                        base64FromPostPhoto3?.let { it1 -> photoList.add(it1) }
+                    }
+                    if (base64FromPostPhoto4 != "") {
+                        base64FromPostPhoto4?.let { it1 -> photoList.add(it1) }
+                    }
+                    viewModel.myNewPost?.Images = photoList
+                    // Log.d("sdkNewPost1", photoList.toString())
+
+                    // 上传新帖子
+
+
+
+
+                viewModel.viewModelScope.launch {
+                    viewModel.parandedit(pid) {
+                        // 当 sdkParsingPID 完成时，这个回调将被调用
+                        //viewModel.sdkFinalPost()
+
+                    }
+                }
+
+
+
+
+
+
                 // binding.buttonPost.isClickable = false
                 Toast.makeText(context, "New post uploaded", Toast.LENGTH_SHORT).show()
                 clearPost()
             }
+        }
+        binding.buttonPost.setOnClickListener{
+            viewModel.sdkFinalPost()
+
         }
 
 //        // 创建帖子的返回监听

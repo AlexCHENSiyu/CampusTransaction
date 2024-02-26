@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:background="@color/design_default_color_primary"
             android:gravity="center_horizontal"
-            android:text="@string/add_post"
+            android:text="EDIT POST"
             android:textColor="@color/colorWhite"
             android:textSize="50sp"
             android:textStyle="bold" />
@@ -254,14 +254,21 @@
             android:textSize="15sp" />
 
         <Button
+            android:id="@+id/button_upload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/search_edit_round"
+            android:text="Upload"
+            android:textSize="20sp"
+            android:layout_above="@id/button_post"
+            android:layout_marginBottom="15dp" />
+
+        <!-- Post Button -->
+        <Button
             android:id="@+id/button_post"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="15dp"
             android:background="@drawable/search_edit_round"
             android:text="@string/post"
             android:textSize="20sp" />
