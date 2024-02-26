@@ -1,6 +1,7 @@
 package com.example.campustransaction.ui.main
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
@@ -47,8 +48,6 @@ class MainFragment : Fragment(){
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        viewModel.sdkGetPosts()
-
         //设置触发下拉刷新的距离
         binding.swipeRefreshLayout.setDistanceToTriggerSync(300)
         binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorBlue)
@@ -61,7 +60,7 @@ class MainFragment : Fragment(){
                 binding.mainNest.computeVerticalScrollOffset() >=
                 binding.mainNest.computeVerticalScrollRange()) {
                 // 已经滑到底部
-                Toast.makeText(context, "OnScrollChange", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(context, "OnScrollChange", Toast.LENGTH_SHORT).show()
                 viewModel.sdkGetMorePosts()
             }
         }
@@ -113,7 +112,6 @@ class MainFragment : Fragment(){
         // 设置帖子列表
         viewModel.responseGetPosts.observe(viewLifecycleOwner){
             binding.swipeRefreshLayout.isRefreshing = false
-            Toast.makeText(context, "observe activate", Toast.LENGTH_SHORT).show()
 
             if (viewModel.responseGetPosts.value?.Success == true){
                 val postList = viewModel.responseGetPosts.value!!.Posts
@@ -132,11 +130,17 @@ class MainFragment : Fragment(){
                         Toast.makeText(context, "long click $position item", Toast.LENGTH_SHORT).show()
                     }
                 })
-
             }
+
         }
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // 第一次抓取
+        viewModel.sdkGetPosts()
     }
 
 }

@@ -110,10 +110,10 @@ class UIViewModel : ViewModel() {
                     myUserInfo.HeadPortrait = tempResponseGetUserInfo.HeadPortrait
                 }
                 _responseGetMyUserInfo.value = ResponseBasic(tempResponseGetUserInfo.Success,tempResponseGetUserInfo.Error)
-                Log.d("sdkGetUserInfo","Success")
+                Log.d("sdkGetMyUserInfo","Success")
             } catch (e: Exception) {
                 _responseGetMyUserInfo.value = ResponseBasic(false,"Failure: ${e.message}")
-                Log.d("sdkGetUserInfo","Failure: ${e.message}")
+                Log.d("sdkGetMyUserInfo","Failure: ${e.message}")
             }
         }
     }

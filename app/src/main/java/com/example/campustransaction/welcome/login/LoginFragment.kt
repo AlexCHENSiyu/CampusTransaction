@@ -85,25 +85,17 @@ class LoginFragment : Fragment() {
 //                    view?.findNavController()?.navigate(R.id.action_mainNavigation_to_postDetailFragment)
 //                }
 
-
                 val channelId = "Channel_ID_1"
                 val channelName = "Channel Name"
                 val channelDescription = "Channel Description"
                 val importance = NotificationManager.IMPORTANCE_LOW
-                val channel = NotificationChannel(channelId, channelName, importance).apply {
-                    description = channelDescription
-                }
-
+                val channel = NotificationChannel(channelId, channelName, importance).apply { description = channelDescription }
 
                 // 获取 NotificationManager 的实例，并将通道添加到通知管理器中
                 val notificationManager = NotificationManagerCompat.from(requireContext())
                 notificationManager.createNotificationChannel(channel)
 
                 // 创建通知构建器
-//                val content =
-
-
-
                 val notificationBuilder = NotificationCompat.Builder(requireContext(), channelId)
                     .setSmallIcon(R.drawable.image2)
                     .setContentTitle("There are items you might interest in!")
@@ -118,7 +110,6 @@ class LoginFragment : Fragment() {
                 // 使用 notify() 方法发送通知
                 val notificationId = 1
                 notificationManager.notify(notificationId, notification)
-
 
             }
         }
