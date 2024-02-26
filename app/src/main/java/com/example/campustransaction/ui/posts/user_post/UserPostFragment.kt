@@ -88,8 +88,8 @@ class UserPostFragment : Fragment() {
 
     private fun askDeletePost(pid: String){
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Delete this post?")
-            .setMessage("Are you sure to delete this post?")
+            .setTitle("Modify Post")
+            .setMessage("Please select an option to delete, modify or mark sold this post.")
             .setCancelable(false)
             .setNegativeButton("CANCEL") {_, _ -> unDeletePost() }
             .setPositiveButton("DELETE") {_, _ -> deletePost(pid) }
