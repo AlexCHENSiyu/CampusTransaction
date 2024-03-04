@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId "com.example.campustransaction"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -89,4 +89,6 @@ dependencies {
     implementation 'com.github.xiaohaozi9825:BubbleView:1.01'
 
     implementation 'com.facebook.fresco:fresco:2.6.0'
+    // google map
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
 }

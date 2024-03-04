@@ -14,6 +14,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -27,6 +29,9 @@
         android:theme="@style/Theme.CampusTransaction"
         tools:targetApi="31">
         <!-- 必须与后面的Provider中的authorities相同 -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDB1By6BfZo6ck95FbYO3FhGRJ3TApJn_4"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.campustransaction.fileProvider"
