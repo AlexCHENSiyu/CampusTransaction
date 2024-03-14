@@ -110,7 +110,7 @@ class LoginFragment : Fragment() {
                     .setContentText("Welcome! New items is now is stack!")
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setContentIntent(pendingIntent)
-//                    .setAutoCancel(true)
+                    .setAutoCancel(true)
 
                 // 使用通知构建器创建通知
                 val notification = notificationBuilder.build()

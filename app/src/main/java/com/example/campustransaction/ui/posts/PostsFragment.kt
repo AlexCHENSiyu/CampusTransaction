@@ -1,5 +1,7 @@
 package com.example.campustransaction.ui.posts
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,12 +17,15 @@ import com.example.campustransaction.api.RequestPost
 import com.example.campustransaction.databinding.FragmentPostsBinding
 import com.example.campustransaction.ui.UIViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import androidx.core.net.toUri
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.File
+import android.os.Build
+import android.app.PendingIntent
+import android.content.Intent
+import android.text.Editable
+import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import com.example.campustransaction.HomeActivity
+
 
 class PostsFragment : Fragment() {
     private val viewModel: UIViewModel by activityViewModels()
@@ -37,6 +42,7 @@ class PostsFragment : Fragment() {
     private val labelsArray = arrayOf("Personal Computer", "Phone", "Digital", "Food&Drink", "Books", "Medicine","Bags","Sports","Fruits","Luxury","Sports","Jewelry","Watches")
     private val checkedLabelsArray = booleanArrayOf(false, false, false, false, false, false, false, false, false, false, false, false, false)
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPostsBinding.inflate(inflater)
         binding.lifecycleOwner = this
@@ -204,11 +210,20 @@ class PostsFragment : Fragment() {
                 viewModel.myNewPost?.Images = photoList
                 // Log.d("sdkNewPost1", photoList.toString())
 
+                // 推送新的post
+                var `ps-textTitle` = binding.textTitle.text
+                var pstextDescrption: Editable? = binding.textDescription.text
+                var pstextPrice = binding.textPrice.text
+
+                csNotificationChannel(`ps-textTitle`,pstextDescrption,pstextPrice)
+
                 // 上传新帖子
                 viewModel.sdkNewPost()
                 // binding.buttonPost.isClickable = false
                 Toast.makeText(context, "New post uploaded", Toast.LENGTH_SHORT).show()
                 clearPost()
+
+
             }
         }
 
@@ -333,7 +348,50 @@ class PostsFragment : Fragment() {
             timer4?.startTime()
         }
 
+
     }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun csNotificationChannel(pstitle: Editable?, psdescription: Editable?, psprice: Editable?) {
+        val channelId = "Channel_ID_Post"
+        val channelName = "Posts Channel"
+        val channelDescription = "Channel Description"
+        val importance = NotificationManager.IMPORTANCE_LOW
+        val channel = NotificationChannel(channelId, channelName, importance).apply {
+            description = channelDescription
+        }
+
+
+        // 获取 NotificationManager 的实例，并将通道添加到通知管理器中
+        val notificationManager = NotificationManagerCompat.from(requireContext())
+        notificationManager.createNotificationChannel(channel)
+
+
+        val notificationBuilder = NotificationCompat.Builder(requireContext(), channelId)
+            .setSmallIcon(androidx.viewpager.R.drawable.notification_bg_normal)
+            .setContentTitle(pstitle)
+            .setContentText(psdescription)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(createPendingIntent(1))
+            .setAutoCancel(true)
+
+        // 使用通知构建器创建通知
+        val notification = notificationBuilder.build()
+
+        // 使用 notify() 方法发送通知
+        val notificationId = 1
+        notificationManager.notify(notificationId, notification)
+    }
+
+
+    // 创建 PendingIntent，用于点击通知时跳转到帖子 Fragment
+    private fun createPendingIntent(pid: String): PendingIntent {
+        val intent = Intent(requireContext(), HomeActivity::class.java)
+        intent.putExtra("pid", pid) // 将 pid 作为额外数据添加到 Intent 中
+        return PendingIntent.getActivity(requireContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+    }
+
+
+
 
 
 
