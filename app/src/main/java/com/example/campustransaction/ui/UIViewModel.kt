@@ -135,7 +135,7 @@ class UIViewModel : ViewModel() {
     }
 
     // 上传新的帖子
-    private val _responseNewPost = MutableLiveData<ResponseBasic>()
+    /**private val _responseNewPost = MutableLiveData<ResponseBasic>()
     val responseNewPost: LiveData<ResponseBasic>
         get() = _responseNewPost
     fun sdkNewPost(){
@@ -145,6 +145,24 @@ class UIViewModel : ViewModel() {
                 _responseNewPost.value = myNewPost?.let { MongodbApi.retrofitService.apiNewPost(it) }
                 if(_responseNewPost.value?.Success == true){
                     Log.d("sdkNewPost","Success")
+                }
+            } catch (e: Exception) {
+                _responseNewPost.value = ResponseBasic(false, "Failure: ${e.message}")
+                Log.d("sdkNewPost", "Failure: ${e.message}")
+            }
+        }
+    }**/
+
+    // 上传新的帖子
+    private val _responseNewPost = MutableLiveData<ResponseBasic>()
+    val responseNewPost: LiveData<ResponseBasic>
+        get() = _responseNewPost
+    fun sdkNewPost() {
+        viewModelScope.launch {
+            try {
+                _responseNewPost.value = myNewPost?.let { MongodbApi.retrofitService.apiNewPost(it) }
+                if (_responseNewPost.value?.Success == true) {
+                    Log.d("sdkNewPost", "Success")
                 }
             } catch (e: Exception) {
                 _responseNewPost.value = ResponseBasic(false, "Failure: ${e.message}")

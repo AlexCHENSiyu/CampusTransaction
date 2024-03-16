@@ -1,5 +1,8 @@
 package com.example.campustransaction.ui.posts
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -14,13 +18,9 @@ import com.example.campustransaction.R
 import com.example.campustransaction.api.RequestPost
 import com.example.campustransaction.databinding.FragmentPostsBinding
 import com.example.campustransaction.ui.UIViewModel
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import androidx.core.net.toUri
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.File
 
 class PostsFragment : Fragment() {
     private val viewModel: UIViewModel by activityViewModels()
@@ -36,6 +36,9 @@ class PostsFragment : Fragment() {
     // post的labels
     private val labelsArray = arrayOf("Personal Computer", "Phone", "Digital", "Food&Drink", "Books", "Medicine","Bags","Sports","Fruits","Luxury","Sports","Jewelry","Watches")
     private val checkedLabelsArray = booleanArrayOf(false, false, false, false, false, false, false, false, false, false, false, false, false)
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var currentLocation: Location? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPostsBinding.inflate(inflater)
@@ -182,13 +185,15 @@ class PostsFragment : Fragment() {
 
         // Post按钮监听
         binding.buttonPost.setOnClickListener {
-            if(binding.textTitle.text == null || binding.textTitle.text.toString() == ""){
+            if (binding.textTitle.text == null || binding.textTitle.text.toString() == "") {
                 Toast.makeText(context, "You must have a Title", Toast.LENGTH_SHORT).show()
-            }else if (binding.textDescription.text == null || binding.textDescription.text.toString() == ""){
+            } else if (binding.textDescription.text == null || binding.textDescription.text.toString() == "") {
                 Toast.makeText(context, "You must have a Description", Toast.LENGTH_SHORT).show()
-            }else if (binding.textPrice.text == null || binding.textPrice.text.toString() == ""){
+            } else if (binding.textPrice.text == null || binding.textPrice.text.toString() == "") {
                 Toast.makeText(context, "You must have a Price", Toast.LENGTH_SHORT).show()
-            }else{
+            } else if (currentLocation == null) {
+                Toast.makeText(context, "Please provide a location", Toast.LENGTH_SHORT).show()
+            } else {
                 // 保存帖子
                 savePost()
                 // 保存图片
@@ -223,6 +228,17 @@ class PostsFragment : Fragment() {
 //            binding.buttonPost.isClickable = true
 //        }
 
+        // Initialize FusedLocationProviderClient
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
+        // Set up radio button listener
+        binding.radioGroupLocation.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.radio_current_location -> {
+                    getCurrentLocation()
+                }
+            }
+        }
 
         return binding.root
     }
@@ -260,7 +276,9 @@ class PostsFragment : Fragment() {
             Text = binding.textDescription.text.toString(),
             Price = binding.textPrice.text.toString().toDoubleOrNull(),
             Auction = false,
-            LostFound = false
+            LostFound = false,
+            Latitude = currentLocation?.latitude,
+            Longitude = currentLocation?.longitude
         )
 
         when (binding.spinnerType.selectedItem.toString())
@@ -332,10 +350,53 @@ class PostsFragment : Fragment() {
             timer4 = TimerUnit(binding.buttonDelete4)
             timer4?.startTime()
         }
-
     }
 
+    private fun getCurrentLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Request location permission if not granted
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                LOCATION_PERMISSION_REQUEST_CODE
+            )
+            return
+        }
 
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location ->
+                if (location != null) {
+                    currentLocation = location
+                    Toast.makeText(requireContext(), "Current location retrieved", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(requireContext(), "Unable to retrieve current location", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e(TAG, "Error getting current location", exception)
+                Toast.makeText(requireContext(), "Error getting current location", Toast.LENGTH_SHORT).show()
+            }
+    }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getCurrentLocation()
+            } else {
+                Toast.makeText(requireContext(), "Location permission denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
+    companion object {
+        private const val TAG = "PostsFragment"
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 100
+    }
 }

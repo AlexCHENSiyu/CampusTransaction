@@ -150,4 +150,6 @@ By using the ReSaleIt app, you acknowledge that you have read, understood, and a
 
     <string name="favorite">my\nfavorite</string>
     <string name="post_history">Post\nHistory</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_activity_place_picker">PlacePickerActivity</string>
 </resources>

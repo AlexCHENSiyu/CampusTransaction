@@ -65,7 +65,9 @@ data class ResponseBasicPost(
     @SerializedName("Auction") val Auction: Boolean = false,
     @SerializedName("LostFound") val LostFound: Boolean = false,
     @SerializedName("Images") val Images: MutableList<String>? = null,
-    @SerializedName("Comments") val Comments: MutableList<ResponseComment>? = null
+    @SerializedName("Comments") val Comments: MutableList<ResponseComment>? = null,
+    @SerializedName("Latitude") val Latitude: Double? = null,
+    @SerializedName("Longitude") val Longitude: Double? = null,
 )
 
 data class ResponseComment(

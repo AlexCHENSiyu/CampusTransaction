@@ -150,7 +150,7 @@ class ShapeXfermodeImageView: AppCompatImageView{
         isSetSize = !(MeasureSpec.getMode(widthMeasureSpec) == MeasureSpec.UNSPECIFIED && MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.UNSPECIFIED)
     }
 
-    @SuppressLint("DrawAllocation")
+    /**@SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas?) {
         canvas?.drawColor(bgColor)
 
@@ -167,6 +167,32 @@ class ShapeXfermodeImageView: AppCompatImageView{
 
         borderPaint.style = Paint.Style.STROKE
         canvas?.drawPath(borderPath, borderPaint)
+        if (!cornerTopLeftAble) {
+            borderPaint.style = Paint.Style.FILL
+            canvas?.drawRect(suppleRectF, borderPaint)
+        }
+    }**/
+
+    @SuppressLint("DrawAllocation")
+    override fun onDraw(canvas: Canvas?) {
+        canvas?.drawColor(bgColor)
+
+        val drawable = drawable
+        if (drawable is BitmapDrawable) {
+            val saved = canvas?.saveLayer(null, null, Canvas.ALL_SAVE_FLAG)
+            val dstBitmap = drawable.bitmap
+            val matrix = setBitmapMatrixAndPath(width.toFloat(), height.toFloat(), dstBitmap)
+            val srcBitmap = createSrcBitmap(width, height)
+            canvas?.drawBitmap(dstBitmap, matrix, bitMapPaint)
+            bitMapPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_IN)
+            canvas?.drawBitmap(srcBitmap, 0f, 0f, bitMapPaint)
+            bitMapPaint.xfermode = null
+            canvas?.restoreToCount(saved ?: 0)
+        }
+
+        borderPaint.style = Paint.Style.STROKE
+        canvas?.drawPath(borderPath, borderPaint)
+
         if (!cornerTopLeftAble) {
             borderPaint.style = Paint.Style.FILL
             canvas?.drawRect(suppleRectF, borderPaint)

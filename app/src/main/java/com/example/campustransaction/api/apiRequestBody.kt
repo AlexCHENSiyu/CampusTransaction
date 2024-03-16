@@ -38,5 +38,7 @@ data class RequestPost(
     @SerializedName("Auction") var Auction: Boolean = false,
     @SerializedName("LostFound") var LostFound: Boolean = false,
     @SerializedName("Fields") var Fields: MutableList<String>? = null,
-    @SerializedName("Images") var Images: MutableList<String>? = null
+    @SerializedName("Images") var Images: MutableList<String>? = null,
+    @SerializedName("Latitude") var Latitude: Double? = null,
+    @SerializedName("Longitude") var Longitude: Double? = null
 )

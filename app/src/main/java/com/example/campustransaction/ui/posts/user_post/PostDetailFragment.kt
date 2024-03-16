@@ -15,11 +15,17 @@ import com.example.campustransaction.databinding.FragmentPostDetailBinding
 import com.example.campustransaction.ui.UIViewModel
 import com.example.campustransaction.ui.posts.user_post.adapter.CommentAdapter
 import com.example.campustransaction.ui.posts.user_post.adapter.PictureAdapter
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
-
-class PostDetailFragment : Fragment() {
+class PostDetailFragment : Fragment(), OnMapReadyCallback {
     private val viewModel: UIViewModel by activityViewModels()
     private lateinit var binding: FragmentPostDetailBinding
+    private lateinit var googleMap: GoogleMap
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -86,8 +92,29 @@ class PostDetailFragment : Fragment() {
             view?.findNavController()?.navigate(R.id.action_postDetailFragment_to_otherPersonalCenterFragment)
         }
 
+        // Initialize Google Maps
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map_container) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
         return binding.root
     }
 
+    override fun onMapReady(map: GoogleMap) {
+        googleMap = map
 
+        // Get the latitude and longitude from the post detail
+        val latitude = viewModel.postDetail?.Latitude
+        val longitude = viewModel.postDetail?.Longitude
+
+        if (latitude != null && longitude != null) {
+            // Create a LatLng object from the latitude and longitude
+            val latLng = LatLng(latitude, longitude)
+
+            // Add a marker at the post location
+            googleMap.addMarker(MarkerOptions().position(latLng).title("Post Location"))
+
+            // Move the camera to the post location
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12f))
+        }
+    }
 }
