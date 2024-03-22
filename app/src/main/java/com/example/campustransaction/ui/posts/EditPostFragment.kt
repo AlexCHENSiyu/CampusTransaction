@@ -20,6 +20,12 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
+import android.net.Uri
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
+
+
 
 
 
@@ -118,6 +124,48 @@ class EditPostFragment  : Fragment() {
         if (viewModel.postPhotoUri4 != null) {
             binding.buttonPhoto4.setImageURI(viewModel.postPhotoUri4);binding.buttonPhoto4.tag =
                 "Selected"
+        }
+        viewModel.sdkOldPosts(pid)
+        viewModel.responseOldPosts.observe(viewLifecycleOwner){
+            binding.textTitle.setText(viewModel.responseOldPosts.value?.Title)
+            binding.textDescription.setText(viewModel.responseOldPosts.value?.Text)
+            binding.textPrice.setText(viewModel.responseOldPosts.value?.Price.toString())
+            if (!viewModel.responseOldPosts.value?.Images?.getOrNull(0).isNullOrEmpty()){
+                val photo1Base64 = viewModel.responseOldPosts.value?.Images?.getOrNull(0)
+                val photo1 = photo1Base64?.let { convertBase64ToBitmap(it) }
+
+                //val photo1=convertBase64ToBitmap(viewModel.responseOldPosts.value?.Images?.get(0))
+
+                binding.buttonPhoto1.setImageBitmap(photo1);binding.buttonPhoto1.tag =
+                "Selected"
+                Log.d("photo1","$photo1")}
+            if(!viewModel.responseOldPosts.value?.Images?.getOrNull(1).isNullOrEmpty()){
+                val photo2Base64 = viewModel.responseOldPosts.value?.Images?.getOrNull(1)
+                val photo2 = photo2Base64?.let { convertBase64ToBitmap(it) }
+
+                //val photo2=Uri.parse(viewModel.responseOldPosts.value?.Images?.get(1))
+                binding.buttonPhoto2.setImageBitmap(photo2);binding.buttonPhoto2.tag =
+                    "Selected"}
+            if(!viewModel.responseOldPosts.value?.Images?.getOrNull(2).isNullOrEmpty()){
+                val photo3Base64 = viewModel.responseOldPosts.value?.Images?.getOrNull(2)
+                val photo3 = photo3Base64?.let { convertBase64ToBitmap(it) }
+
+                //val photo3=Uri.parse(viewModel.responseOldPosts.value?.Images?.get(2))
+                binding.buttonPhoto3.setImageBitmap(photo3);binding.buttonPhoto3.tag =
+                    "Selected"}
+            if (!viewModel.responseOldPosts.value?.Images?.getOrNull(3).isNullOrEmpty()){
+                val photo4Base64 = viewModel.responseOldPosts.value?.Images?.getOrNull(3)
+                val photo4 = photo4Base64?.let { convertBase64ToBitmap(it) }
+
+                //val photo4=Uri.parse(viewModel.responseOldPosts.value?.Images?.get(3))
+
+                binding.buttonPhoto4.setImageBitmap(photo4);binding.buttonPhoto4.tag =
+                    "Selected"}
+            //Log.d("photo1","$photo1")
+
+
+
+
         }
 
 
@@ -458,6 +506,10 @@ class EditPostFragment  : Fragment() {
             timer4?.startTime()
         }
 
+    }
+    fun convertBase64ToBitmap(base64Str: String): Bitmap? {
+        val decodedBytes: ByteArray = Base64.decode(base64Str.substring(base64Str.indexOf(",") + 1), Base64.DEFAULT)
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
     }
 
 

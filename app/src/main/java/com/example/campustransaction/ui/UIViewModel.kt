@@ -284,6 +284,19 @@ class UIViewModel : ViewModel() {
             }
         }
     }
+    private val _responseOldPosts = MutableLiveData<ResponseBasicPost>()
+    val responseOldPosts: LiveData<ResponseBasicPost>
+        get() = _responseOldPosts
+    fun sdkOldPosts(PID:String) {
+        viewModelScope.launch {
+
+            _responseOldPosts.value = MongodbApi.retrofitService.apiOldPost(PID)
+            Log.d("sdkOldPosts","Success")
+
+
+
+        }
+    }
 
 
 

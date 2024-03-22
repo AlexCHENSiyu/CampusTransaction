@@ -89,6 +89,8 @@ interface MongodbApiService {
     suspend fun apiParsingPid(@Part("PID") PID:String): ResponseBasic
     @POST("final-post")
     suspend fun apiFinalPost(): ResponseBasic
+    @GET("old-post")
+    suspend fun apiOldPost(@Query("PID") PID:String): ResponseBasicPost
 
 
 }
