@@ -24,6 +24,11 @@ import android.net.Uri
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
+import android.content.Context
+import android.os.Environment
+import java.io.File
+import java.io.FileOutputStream
+
 
 
 
@@ -96,6 +101,57 @@ class EditPostFragment  : Fragment() {
         binding = FragmentEditPostBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        if (viewModel.myNewPost == null) {
+        viewModel.sdkOldPosts(pid)
+        viewModel.responseOldPosts.observe(viewLifecycleOwner){
+            binding.textTitle.setText(viewModel.responseOldPosts.value?.Title)
+            binding.textDescription.setText(viewModel.responseOldPosts.value?.Text)
+            binding.textPrice.setText(viewModel.responseOldPosts.value?.Price.toString())
+
+            if (!viewModel.responseOldPosts.value?.Images?.getOrNull(0).isNullOrEmpty()){
+                val photo1Base64 = viewModel.responseOldPosts.value?.Images?.getOrNull(0)
+
+                val photo1 = photo1Base64?.let { convertBase64ToUri(it, requireContext()) }
+
+
+                binding.buttonPhoto1.setImageURI(photo1);binding.buttonPhoto1.tag =
+                "Selected"
+                viewModel.postPhotoUri1=photo1
+                Log.d("photo1","$photo1")}
+            if(!viewModel.responseOldPosts.value?.Images?.getOrNull(1).isNullOrEmpty()){
+                val photo2Base64 = viewModel.responseOldPosts.value?.Images?.getOrNull(1)
+                val photo2 = photo2Base64?.let { convertBase64ToUri(it, requireContext()) }
+
+                binding.buttonPhoto2.setImageURI(photo2);binding.buttonPhoto2.tag =
+                    "Selected"
+                viewModel.postPhotoUri2=photo2
+
+            }
+
+            if(!viewModel.responseOldPosts.value?.Images?.getOrNull(2).isNullOrEmpty()){
+                val photo3Base64 = viewModel.responseOldPosts.value?.Images?.getOrNull(2)
+                val photo3 = photo3Base64?.let { convertBase64ToUri(it, requireContext()) }
+
+                binding.buttonPhoto3.setImageURI(photo3);binding.buttonPhoto3.tag =
+                    "Selected"
+                viewModel.postPhotoUri3=photo3
+            }
+            if (!viewModel.responseOldPosts.value?.Images?.getOrNull(3).isNullOrEmpty()){
+                val photo4Base64 = viewModel.responseOldPosts.value?.Images?.getOrNull(3)
+                val photo4 = photo4Base64?.let { convertBase64ToUri(it, requireContext()) }
+
+
+                binding.buttonPhoto4.setImageURI(photo4);binding.buttonPhoto4.tag =
+                    "Selected"
+                viewModel.postPhotoUri4=photo4
+            }
+
+            //Log.d("photo1","$photo1")
+
+
+
+
+        }}
 
         // 重现上次保存的内容, 文字和图片
         if (viewModel.myNewPost != null) {
@@ -125,48 +181,7 @@ class EditPostFragment  : Fragment() {
             binding.buttonPhoto4.setImageURI(viewModel.postPhotoUri4);binding.buttonPhoto4.tag =
                 "Selected"
         }
-        viewModel.sdkOldPosts(pid)
-        viewModel.responseOldPosts.observe(viewLifecycleOwner){
-            binding.textTitle.setText(viewModel.responseOldPosts.value?.Title)
-            binding.textDescription.setText(viewModel.responseOldPosts.value?.Text)
-            binding.textPrice.setText(viewModel.responseOldPosts.value?.Price.toString())
-            if (!viewModel.responseOldPosts.value?.Images?.getOrNull(0).isNullOrEmpty()){
-                val photo1Base64 = viewModel.responseOldPosts.value?.Images?.getOrNull(0)
-                val photo1 = photo1Base64?.let { convertBase64ToBitmap(it) }
 
-                //val photo1=convertBase64ToBitmap(viewModel.responseOldPosts.value?.Images?.get(0))
-
-                binding.buttonPhoto1.setImageBitmap(photo1);binding.buttonPhoto1.tag =
-                "Selected"
-                Log.d("photo1","$photo1")}
-            if(!viewModel.responseOldPosts.value?.Images?.getOrNull(1).isNullOrEmpty()){
-                val photo2Base64 = viewModel.responseOldPosts.value?.Images?.getOrNull(1)
-                val photo2 = photo2Base64?.let { convertBase64ToBitmap(it) }
-
-                //val photo2=Uri.parse(viewModel.responseOldPosts.value?.Images?.get(1))
-                binding.buttonPhoto2.setImageBitmap(photo2);binding.buttonPhoto2.tag =
-                    "Selected"}
-            if(!viewModel.responseOldPosts.value?.Images?.getOrNull(2).isNullOrEmpty()){
-                val photo3Base64 = viewModel.responseOldPosts.value?.Images?.getOrNull(2)
-                val photo3 = photo3Base64?.let { convertBase64ToBitmap(it) }
-
-                //val photo3=Uri.parse(viewModel.responseOldPosts.value?.Images?.get(2))
-                binding.buttonPhoto3.setImageBitmap(photo3);binding.buttonPhoto3.tag =
-                    "Selected"}
-            if (!viewModel.responseOldPosts.value?.Images?.getOrNull(3).isNullOrEmpty()){
-                val photo4Base64 = viewModel.responseOldPosts.value?.Images?.getOrNull(3)
-                val photo4 = photo4Base64?.let { convertBase64ToBitmap(it) }
-
-                //val photo4=Uri.parse(viewModel.responseOldPosts.value?.Images?.get(3))
-
-                binding.buttonPhoto4.setImageBitmap(photo4);binding.buttonPhoto4.tag =
-                    "Selected"}
-            //Log.d("photo1","$photo1")
-
-
-
-
-        }
 
 
         // 申请相机和图库读写权限
@@ -295,7 +310,7 @@ class EditPostFragment  : Fragment() {
         }
 
         // Upload按钮监听
-        binding.buttonUpload.setOnClickListener {
+        binding.buttonPost.setOnClickListener {
             if (binding.textTitle.text == null || binding.textTitle.text.toString() == "") {
                 Toast.makeText(context, "You must have a Title", Toast.LENGTH_SHORT).show()
             } else if (binding.textDescription.text == null || binding.textDescription.text.toString() == "") {
@@ -356,7 +371,7 @@ class EditPostFragment  : Fragment() {
                         base64FromPostPhoto4?.let { it1 -> photoList.add(it1) }
                     }
                     viewModel.myNewPost?.Images = photoList
-                    // Log.d("sdkNewPost1", photoList.toString())
+                    Log.d("sdkNewPost1", photoList.toString())
 
                     // 上传新帖子
 
@@ -364,11 +379,14 @@ class EditPostFragment  : Fragment() {
 
 
                 viewModel.viewModelScope.launch {
-                    viewModel.parandedit(pid) {
+                    //viewModel.parandedit(pid) {
                         // 当 sdkParsingPID 完成时，这个回调将被调用
                         //viewModel.sdkFinalPost()
 
-                    }
+
+                    //}
+                    Log.d("firstsdkTEditPost", viewModel.myNewPost.toString())
+                    viewModel.sdkTEditPost(pid)
                 }
 
 
@@ -381,10 +399,16 @@ class EditPostFragment  : Fragment() {
                 clearPost()
             }
         }
+        /*
         binding.buttonPost.setOnClickListener{
             viewModel.sdkFinalPost()
 
+
         }
+
+         */
+
+
 
 //        // 创建帖子的返回监听
 //        viewModel.responseNewPost.observe(viewLifecycleOwner){
@@ -511,6 +535,25 @@ class EditPostFragment  : Fragment() {
         val decodedBytes: ByteArray = Base64.decode(base64Str.substring(base64Str.indexOf(",") + 1), Base64.DEFAULT)
         return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
     }
+
+    fun convertBase64ToUri(base64Str: String, context: Context): Uri? {
+        // 解码Base64
+        val imageBytes = Base64.decode(base64Str, Base64.DEFAULT)
+        val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+
+        // 创建文件来保存图片
+        val imagesFolder = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val file = File(imagesFolder, "temp_image_${System.currentTimeMillis()}.jpg")
+
+        // 将Bitmap保存为文件
+        FileOutputStream(file).use { fos ->
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+        }
+
+        // 返回文件的Uri
+        return Uri.fromFile(file)
+    }
+
 
 
 }

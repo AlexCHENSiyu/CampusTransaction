@@ -92,6 +92,11 @@ interface MongodbApiService {
     @GET("old-post")
     suspend fun apiOldPost(@Query("PID") PID:String): ResponseBasicPost
 
+    @Multipart
+    @POST("true-edit-pid")
+    suspend fun apiTeditPid(@Part("PID") PID:String,
+                            @Part("Post") Post:RequestPost):ResponseBasic
+
 
 }
 

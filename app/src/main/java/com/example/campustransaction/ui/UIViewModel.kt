@@ -241,6 +241,25 @@ class UIViewModel : ViewModel() {
             }
         }
     }
+
+    private val _responseTEditPost = MutableLiveData<ResponseBasic>()
+    val responseTEditPost: LiveData<ResponseBasic>
+        get() = _responseTEditPost
+    suspend fun sdkTEditPost(PID:String){
+        viewModelScope.launch {
+            Log.d("sdkTEditPost","Begin")
+            try {
+                Log.d("sdkTEditPost", myNewPost.toString())
+                _responseTEditPost.value = myNewPost?.let { MongodbApi.retrofitService.apiTeditPid(PID,it) }
+                if(_responseTEditPost.value?.Success == true){
+                    Log.d("sdkTEditPost","Success")
+                }
+            } catch (e: Exception) {
+                _responseTEditPost.value = ResponseBasic(false, "Failure: ${e.message}")
+                Log.d("sdkTEditPost", "Failure: ${e.message}")
+            }
+        }
+    }
     fun parandedit(PID: String, onComplete: () -> Unit) {
         viewModelScope.launch {
             try {
