@@ -93,7 +93,10 @@ class PostDetailFragment : Fragment(), OnMapReadyCallback {
         }
 
         // Initialize Google Maps
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map_container) as SupportMapFragment
+        val mapFragment = SupportMapFragment.newInstance()
+        childFragmentManager.beginTransaction()
+            .replace(R.id.map_container, mapFragment)
+            .commit()
         mapFragment.getMapAsync(this)
 
         return binding.root

@@ -20,9 +20,15 @@ import com.example.campustransaction.databinding.FragmentPostsBinding
 import com.example.campustransaction.ui.UIViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class PostsFragment : Fragment() {
+class PostsFragment : Fragment(), OnMapReadyCallback {
     private val viewModel: UIViewModel by activityViewModels()
     private lateinit var binding: FragmentPostsBinding
 
@@ -39,6 +45,8 @@ class PostsFragment : Fragment() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var currentLocation: Location? = null
+    private lateinit var googleMap: GoogleMap
+    private var customLocation: LatLng? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPostsBinding.inflate(inflater)
@@ -231,11 +239,24 @@ class PostsFragment : Fragment() {
         // Initialize FusedLocationProviderClient
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
+        // Request current location instantly
+        getCurrentLocation()
+
         // Set up radio button listener
         binding.radioGroupLocation.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.radio_current_location -> {
-                    getCurrentLocation()
+                    binding.mapContainer.visibility = View.GONE
+                    // Current location is already acquired, no need to request again
+                }
+                R.id.radio_custom_location -> {
+                    binding.mapContainer.visibility = View.VISIBLE
+                    // Set up the map and enable the search bar
+                    val mapFragment = SupportMapFragment.newInstance()
+                    childFragmentManager.beginTransaction()
+                        .replace(R.id.map_container, mapFragment)
+                        .commit()
+                    mapFragment.getMapAsync(this)
                 }
             }
         }
@@ -269,7 +290,7 @@ class PostsFragment : Fragment() {
     }
 
     // 保存帖子
-    private fun savePost(){
+    private fun savePost() {
         viewModel.myNewPost = RequestPost(
             PostOwner = viewModel.myUserInfo.EmailAddress,
             Title = binding.textTitle.text.toString(),
@@ -277,8 +298,8 @@ class PostsFragment : Fragment() {
             Price = binding.textPrice.text.toString().toDoubleOrNull(),
             Auction = false,
             LostFound = false,
-            Latitude = currentLocation?.latitude,
-            Longitude = currentLocation?.longitude
+            Latitude = if (customLocation != null) customLocation?.latitude else currentLocation?.latitude,
+            Longitude = if (customLocation != null) customLocation?.longitude else currentLocation?.longitude
         )
 
         when (binding.spinnerType.selectedItem.toString())
@@ -352,6 +373,23 @@ class PostsFragment : Fragment() {
         }
     }
 
+    override fun onMapReady(map: GoogleMap) {
+        googleMap = map
+
+        // Set initial map position to the user's current location
+        if (currentLocation != null) {
+            val currentLatLng = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
+        }
+
+        // Set custom location when the user clicks on the map
+        googleMap.setOnMapClickListener { latLng ->
+            customLocation = latLng
+            googleMap.clear()
+            googleMap.addMarker(MarkerOptions().position(latLng))
+        }
+    }
+
     private fun getCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
@@ -374,6 +412,7 @@ class PostsFragment : Fragment() {
             .addOnSuccessListener { location ->
                 if (location != null) {
                     currentLocation = location
+                    customLocation = null // Clear custom location
                     Toast.makeText(requireContext(), "Current location retrieved", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(requireContext(), "Unable to retrieve current location", Toast.LENGTH_SHORT).show()
@@ -384,6 +423,7 @@ class PostsFragment : Fragment() {
                 Toast.makeText(requireContext(), "Error getting current location", Toast.LENGTH_SHORT).show()
             }
     }
+
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
