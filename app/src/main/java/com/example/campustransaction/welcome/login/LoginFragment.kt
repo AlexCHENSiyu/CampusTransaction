@@ -23,6 +23,7 @@ import com.example.campustransaction.MainActivity
 import com.example.campustransaction.R
 import com.example.campustransaction.databinding.FragmentLoginBinding
 import com.example.campustransaction.databinding.FragmentMainBinding
+import com.example.campustransaction.databinding.FragmentPostDetailBinding
 import com.example.campustransaction.databinding.FragmentUserPostBinding
 import com.example.campustransaction.ui.UIViewModel
 import com.example.campustransaction.ui.userInfo.UserInfoFragment
@@ -46,7 +47,7 @@ class LoginFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        val binding2 = FragmentMainBinding.inflate(inflater)
+        val binding2 = FragmentPostDetailBinding.inflate(inflater)
         binding2.lifecycleOwner = this
         binding2.viewModel = viewModel2
 
@@ -67,7 +68,6 @@ class LoginFragment : Fragment() {
 //                Log.d("myEmailAddress", "Email:$emailAddress")
 //                Log.d("myEmailAddress", "Password:$password")
 //
-
                 // 创建 PendingIntent，指定要启动的目标 Activity
                 val position = 0
                 val intent2 = Intent(activity, FavoriteActivity::class.java)

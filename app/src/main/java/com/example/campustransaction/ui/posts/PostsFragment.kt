@@ -20,7 +20,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import android.os.Build
 import android.app.PendingIntent
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.text.Editable
+import android.util.Base64
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -214,8 +217,9 @@ class PostsFragment : Fragment() {
                 var `ps-textTitle` = binding.textTitle.text
                 var pstextDescrption: Editable? = binding.textDescription.text
                 var pstextPrice = binding.textPrice.text
+                val psPhoto: Bitmap? = base64FromPostPhoto1?.let { decodeBase64ToBitmap(it) }
 
-                csNotificationChannel(`ps-textTitle`,pstextDescrption,pstextPrice)
+                csNotificationChannel(`ps-textTitle`,pstextDescrption,pstextPrice,psPhoto)
 
                 // 上传新帖子
                 viewModel.sdkNewPost()
@@ -351,7 +355,7 @@ class PostsFragment : Fragment() {
 
     }
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun csNotificationChannel(pstitle: Editable?, psdescription: Editable?, psprice: Editable?) {
+    private fun csNotificationChannel(pstitle: Editable?, psdescription: Editable?, psprice: Editable?, psPhoto: Bitmap?) {
         val channelId = "Channel_ID_Post"
         val channelName = "Posts Channel"
         val channelDescription = "Channel Description"
@@ -365,21 +369,60 @@ class PostsFragment : Fragment() {
         val notificationManager = NotificationManagerCompat.from(requireContext())
         notificationManager.createNotificationChannel(channel)
 
+        val currentIntent = createPendingIntent(1.toString())
 
-        val notificationBuilder = NotificationCompat.Builder(requireContext(), channelId)
-            .setSmallIcon(androidx.viewpager.R.drawable.notification_bg_normal)
-            .setContentTitle(pstitle)
-            .setContentText(psdescription)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(createPendingIntent(1))
-            .setAutoCancel(true)
+        if(psPhoto != null){
+            val notificationBuilder = NotificationCompat.Builder(requireContext(), channelId)
+                .setSmallIcon(androidx.viewpager.R.drawable.notification_bg_normal)
+                .setContentTitle("You have new item post successfully")
+                .setContentText(pstitle)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(currentIntent)
+                .setAutoCancel(true)
+                .setStyle(NotificationCompat.BigTextStyle()
+                    .bigText("$pstitle\n$ $psprice\nDescription:\n\t$psdescription"))
+                .setLargeIcon(psPhoto)
 
-        // 使用通知构建器创建通知
-        val notification = notificationBuilder.build()
+//            .setStyle(NotificationCompat.BigPictureStyle()
+//                .bigPicture(psPhoto)
+//                .bigLargeIcon(null))
 
-        // 使用 notify() 方法发送通知
-        val notificationId = 1
-        notificationManager.notify(notificationId, notification)
+            // 使用通知构建器创建通知
+            val notification = notificationBuilder.build()
+
+            // 使用 notify() 方法发送通知
+            val notificationId = 1
+            notificationManager.notify(notificationId, notification)
+
+            //        if (isPendingIntentUsed(pendingIntent)) {
+//            viewModel.sdkClickPost("1")
+//        }
+        }
+
+        else{
+            val notificationBuilder = NotificationCompat.Builder(requireContext(), channelId)
+                .setSmallIcon(androidx.viewpager.R.drawable.notification_bg_normal)
+                .setContentTitle("You have new item post successfully")
+                .setContentText(pstitle)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(currentIntent)
+                .setAutoCancel(true)
+
+            // 使用通知构建器创建通知
+            val notification = notificationBuilder.build()
+
+            // 使用 notify() 方法发送通知
+            val notificationId = 1
+            notificationManager.notify(notificationId, notification)
+
+        }
+
+
+
+
+
+
+
     }
 
 
@@ -388,6 +431,23 @@ class PostsFragment : Fragment() {
         val intent = Intent(requireContext(), HomeActivity::class.java)
         intent.putExtra("pid", pid) // 将 pid 作为额外数据添加到 Intent 中
         return PendingIntent.getActivity(requireContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+    }
+
+    //    private fun isPendingIntentUsed(pendingIntent: PendingIntent): Boolean {
+//        val existingPendingIntent = PendingIntent.getActivity(
+//            requireContext(),
+//            0,
+//            Intent(requireContext(), HomeActivity::class.java).apply {
+//                // 添加与原始意图相同的标志
+//                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+//            },
+//            PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
+//        )
+//        return existingPendingIntent != null
+//    }
+    fun decodeBase64ToBitmap(base64String: String): Bitmap? {
+        val decodedBytes = Base64.decode(base64String, Base64.DEFAULT)
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
     }
 
 
