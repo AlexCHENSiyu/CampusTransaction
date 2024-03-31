@@ -25,6 +25,7 @@ import androidx.navigation.findNavController
 import com.example.campustransaction.databinding.FragmentPhotoBinding
 import com.example.campustransaction.ui.UIViewModel
 import java.io.File
+import kotlin.random.Random
 
 class PhotoFragment : Fragment() {
     private val viewModel: UIViewModel by activityViewModels()
@@ -84,7 +85,8 @@ class PhotoFragment : Fragment() {
              **/
 
             //Log.d("PhotoFragment", "camera")
-            val outImage = File(context?.externalCacheDir, "outPut_image.jpg")
+            val imageName = generateRandomImageName()
+            val outImage = File(context?.externalCacheDir, imageName)
             try {
                 if(outImage.exists()){
                     outImage.delete()
@@ -196,9 +198,9 @@ class PhotoFragment : Fragment() {
     }
 
     @SuppressLint("Range")
-    private fun getImagePath(uri: Uri, Selection:String?):String?{
+    private fun getImagePath(uri: Uri, selection:String?):String?{
         var path:String? = null
-        val cursor = context?.contentResolver?.query(uri, null, Selection, null,null)
+        val cursor = context?.contentResolver?.query(uri, null, selection, null,null)
         if(cursor!=null){
             //Log.d(tag,cursor.toString())
             if(cursor.moveToFirst()){
@@ -209,7 +211,17 @@ class PhotoFragment : Fragment() {
         return path
     }
 
+    // 随机生成图片名称
+    fun generateRandomImageName(extension: String = "jpg"): String {
+        // 获取当前时间戳
+        val timestamp = System.currentTimeMillis()
 
+        // 生成一个随机数作为文件名的一部分，以确保更高的唯一性
+        val randomPart = Random.nextInt(1, 99999)
+
+        // 组合以上部分并添加扩展名生成最终的文件名
+        return "image_${timestamp}_${randomPart}.$extension"
+    }
 
 /**
  *
