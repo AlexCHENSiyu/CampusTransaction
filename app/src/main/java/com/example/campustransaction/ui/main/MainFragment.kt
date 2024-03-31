@@ -24,6 +24,8 @@ import com.example.campustransaction.user_post.adapter.PostAdapter
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
+import android.content.Intent
+
 
 
 class MainFragment : Fragment(){
@@ -113,7 +115,22 @@ class MainFragment : Fragment(){
                         view.findNavController().navigate(R.id.action_mainNavigation_to_postDetailFragment)
                     }
                     override fun onItemLongClick(view: View, position: Int) {
-                        Toast.makeText(context, "long click $position item", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(context, "long click $position item", Toast.LENGTH_SHORT).show()
+                        val postTitle = viewModel.postDetail?.Title
+                        val postPrice = viewModel.postDetail?.Price
+                        val postOwner = viewModel.postDetail?.PostOwner
+                        val shareMessage = "Check out this post: \nTitle: $postTitle\nPrice: $postPrice\nPosted by: $postOwner"
+                        val shareIntent = Intent().apply {
+                            action = Intent.ACTION_SEND
+                            putExtra(Intent.EXTRA_TEXT, shareMessage)
+                            type = "text/plain"
+                        }
+
+
+                        startActivity(Intent.createChooser(shareIntent, "Share Post Details"))
+
+
+
                     }
                 })
 
