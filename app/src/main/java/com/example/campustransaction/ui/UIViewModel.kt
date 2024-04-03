@@ -70,6 +70,9 @@ class UIViewModel : ViewModel() {
     // banner
     var bannerIndex: Int = 0
 
+    // search radius
+    var searchRadius: Int = 1
+
     //SDK -> API----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // 设置用户信息
@@ -209,23 +212,36 @@ class UIViewModel : ViewModel() {
     private val _responseGetPosts = MutableLiveData<ResponsePosts>()
     val responseGetPosts: LiveData<ResponsePosts>
         get() = _responseGetPosts
-    fun sdkGetPosts(Keyword:String? = null) {
+    fun sdkGetPosts(Keyword: String? = null, longitude: Double?, latitude: Double?, useSearchRadius: Boolean = false) {
         viewModelScope.launch {
             try {
-                _responseGetPosts.value = MongodbApi.retrofitService.apiGetPosts(myUserInfo.EmailAddress, Keyword)
-                Log.d("sdkGetPosts","Success")
+                _responseGetPosts.value = MongodbApi.retrofitService.apiGetPosts(
+                    myUserInfo.EmailAddress,
+                    Keyword,
+                    if (useSearchRadius) searchRadius else null,
+                    longitude,
+                    latitude
+                )
+                Log.d("sdkGetPosts", "Success")
             } catch (e: Exception) {
                 _responseGetPosts.value = ResponsePosts(Success = false, Error = "Failure: ${e.message}")
                 Log.d("sdkGetPosts", "Failure: ${e.message}")
             }
         }
     }
+
     // 主页获取更多评论
-    fun sdkGetMorePosts(Keyword:String? = null) {
+    fun sdkGetMorePosts(Keyword:String? = null, longitude: Double?, latitude: Double?, useSearchRadius: Boolean = false) {
         viewModelScope.launch {
             try {
                 val tempPosts = responseGetPosts.value?.Posts
-                val tempResponse = MongodbApi.retrofitService.apiGetPosts(myUserInfo.EmailAddress, Keyword)
+                val tempResponse = MongodbApi.retrofitService.apiGetPosts(
+                    myUserInfo.EmailAddress,
+                    Keyword,
+                    if (useSearchRadius) searchRadius else null,
+                    longitude,
+                    latitude
+                )
                 tempResponse.Posts?.let { tempPosts?.addAll(it) }
                 _responseGetPosts.value = ResponsePosts(Success = _responseGetPosts.value!!.Success, Posts = tempPosts)
                 Log.d("sdkGetMorePosts","Success with length ${_responseGetPosts.value?.Posts?.size}")

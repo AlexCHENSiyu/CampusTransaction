@@ -46,11 +46,42 @@
                         android:iconifiedByDefault="false"
                         android:queryHint="Search" />
 
+                    <TextView
+                        android:id="@+id/text_search_radius"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/search_bar"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Search Radius: 1 km"
+                        android:textSize="16sp" />
+
+                    <SeekBar
+                        android:id="@+id/seekbar_search_radius"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text_search_radius"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="15dp"
+                        android:max="49"
+                        android:progress="0" />
+
+                    <ToggleButton
+                        android:id="@+id/toggle_search_radius"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/seekbar_search_radius"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:textOff="Use Search Radius"
+                        android:textOn="Using Search Radius" />
+
                     <com.youth.banner.Banner
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
                         android:layout_height="220dp"
-                        android:layout_below="@+id/search_bar"
+                        android:layout_below="@+id/toggle_search_radius"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="10dp"

@@ -7,7 +7,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 import java.util.concurrent.TimeUnit
 
-private const val BASE_URL = "http://192.168.0.27:5000"
+private const val BASE_URL = "http://192.168.0.27:5000/"
 //private const val BASE_URL = "http://18.162.214.19/chen/"
 
 private val okHttpClient = OkHttpClient.Builder()
@@ -86,9 +86,19 @@ interface MongodbApiService {
                                @Part("PID") PID:String,
                                @Part("Text") Text:String): ResponseBasic
 
+    // ...
+
     @GET("get-posts")
-    suspend fun apiGetPosts(@Query("EmailAddress") EmailAddress:String,
-                            @Query("Keyword") Keyword:String? = null): ResponsePosts
+    suspend fun apiGetPosts(
+        @Query("EmailAddress") EmailAddress: String,
+        @Query("Keyword") Keyword: String? = null,
+        @Query("Radius") Radius: Int? = null,
+        @Query("Longitude") Longitude: Double? = null,
+        @Query("Latitude") Latitude: Double? = null
+    ): ResponsePosts
+
+// ...
+
     @GET("click-post")
     suspend fun apiClickPost(@Query("EmailAddress") EmailAddress:String,
                              @Query("PID") PID:String): ResponseBasic
