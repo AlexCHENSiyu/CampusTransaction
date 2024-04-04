@@ -82,13 +82,7 @@ interface MongodbApiService {
     @GET("get-post-history")
     suspend fun apiPostHistory(@Query("EmailAddress") EmailAddress:String): ResponsePosts
 
-    @POST("edit-post")
-    suspend fun apiEditPost(@Body Post: RequestPost): ResponseBasic
-    @Multipart
-    @POST("parsing-pid")
-    suspend fun apiParsingPid(@Part("PID") PID:String): ResponseBasic
-    @POST("final-post")
-    suspend fun apiFinalPost(): ResponseBasic
+
     @GET("old-post")
     suspend fun apiOldPost(@Query("PID") PID:String): ResponseBasicPost
 

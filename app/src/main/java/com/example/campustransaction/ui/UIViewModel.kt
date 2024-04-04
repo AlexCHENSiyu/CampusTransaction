@@ -223,24 +223,7 @@ class UIViewModel : ViewModel() {
         }
     }
 
-    private val _responseEditPost = MutableLiveData<ResponseBasic>()
-    val responseEditPost: LiveData<ResponseBasic>
-        get() = _responseEditPost
-    suspend fun sdkEditPost(){
-        viewModelScope.launch {
-            Log.d("sdkEditPost","Begin")
-            try {
-                 Log.d("sdkEditPost", myNewPost.toString())
-                _responseEditPost.value = myNewPost?.let { MongodbApi.retrofitService.apiEditPost(it) }
-                if(_responseEditPost.value?.Success == true){
-                    Log.d("sdkEditPost","Success")
-                }
-            } catch (e: Exception) {
-                _responseEditPost.value = ResponseBasic(false, "Failure: ${e.message}")
-                Log.d("sdkEditPost", "Failure: ${e.message}")
-            }
-        }
-    }
+
 
     private val _responseTEditPost = MutableLiveData<ResponseBasic>()
     val responseTEditPost: LiveData<ResponseBasic>
@@ -260,49 +243,10 @@ class UIViewModel : ViewModel() {
             }
         }
     }
-    fun parandedit(PID: String, onComplete: () -> Unit) {
-        viewModelScope.launch {
-            try {
-                sdkParsingPID(PID)
-                sdkEditPost()
-                onComplete()
-                Log.d("sdkParsingPID", "Success")
-            } catch (e: Exception) {
-                Log.d("sdkParsingPID", "Error: ${e.message}")
-                // 处理异常
-                onComplete()
-            }
-        }
-    }
-    private val _responseFinalPost = MutableLiveData<ResponseBasic>()
-    val responseFinalPost: LiveData<ResponseBasic>
-        get() = _responseFinalPost
-    fun sdkFinalPost(){
-        viewModelScope.launch {
-        try{_responseFinalPost.value = MongodbApi.retrofitService.apiFinalPost()
-            Log.d("sdkFinalPost", "Begin")
-        }catch(e:Exception){
-            Log.d("sdkFinalPost", "Error")
-        }
-        }
-    }
 
-    private val _responseParsingPID = MutableLiveData<ResponseBasic>()
-    val responseParsingPID: LiveData<ResponseBasic>
-        get() = _responseParsingPID
-    suspend fun sdkParsingPID(PID:String){
-        Log.d("sdkParsingPID", "Function called with pid: $PID")
-        viewModelScope.launch {
-            try {
-                _responseParsingPID.value = MongodbApi.retrofitService.apiParsingPid(PID)
 
-                Log.d("sdkParsingPID","Success")
-            } catch (e: Exception) {
-                _responseParsingPID.value = ResponseBasic(Success = false, Error = "Failure: ${e.message}")
-                Log.d("sdkParsingPID", "Failure: ${e.message}")
-            }
-        }
-    }
+
+
     private val _responseOldPosts = MutableLiveData<ResponseBasicPost>()
     val responseOldPosts: LiveData<ResponseBasicPost>
         get() = _responseOldPosts
