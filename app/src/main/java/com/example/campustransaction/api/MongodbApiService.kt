@@ -7,7 +7,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 import java.util.concurrent.TimeUnit
 
-private const val BASE_URL = "http://192.168.0.27:5000/"
+private const val BASE_URL = "http://10.0.2.2:5000"
 //private const val BASE_URL = "http://18.162.214.19/chen/"
 
 private val okHttpClient = OkHttpClient.Builder()
@@ -105,6 +105,14 @@ interface MongodbApiService {
 
     @GET("get-post-history")
     suspend fun apiPostHistory(@Query("EmailAddress") EmailAddress:String): ResponsePosts
+
+    @GET("old-post")
+    suspend fun apiOldPost(@Query("PID") PID:String): ResponseBasicPost
+
+    @Multipart
+    @POST("true-edit-pid")
+    suspend fun apiTeditPid(@Part("PID") PID:String,
+                            @Part("Post") Post:RequestPost):ResponseBasic
 
 }
 

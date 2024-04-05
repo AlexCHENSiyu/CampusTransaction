@@ -34,6 +34,7 @@ import com.google.android.gms.location.LocationServices
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
+import android.content.Intent
 
 class MainFragment : Fragment() {
     private val viewModel: UIViewModel by activityViewModels()
@@ -154,7 +155,16 @@ class MainFragment : Fragment() {
                     }
 
                     override fun onItemLongClick(view: View, position: Int) {
-                        Toast.makeText(context, "long click $position item", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(context, "long click $position item", Toast.LENGTH_SHORT).show()
+                        val postTitle = viewModel.postDetail?.Title
+                        val postPrice = viewModel.postDetail?.Price
+                        val postOwner = viewModel.postDetail?.PostOwner
+                        val shareMessage = "Check out this post: \nTitle: $postTitle\nPrice: $postPrice\nPosted by: $postOwner"
+                        val shareIntent = Intent().apply {
+                            action = Intent.ACTION_SEND
+                            putExtra(Intent.EXTRA_TEXT, shareMessage)
+                            type = "text/plain"}
+                        startActivity(Intent.createChooser(shareIntent, "Share Post Details"))
                     }
                 })
             }

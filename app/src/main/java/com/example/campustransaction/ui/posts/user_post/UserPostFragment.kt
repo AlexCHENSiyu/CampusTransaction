@@ -17,6 +17,8 @@ import com.example.campustransaction.databinding.FragmentUserPostBinding
 import com.example.campustransaction.ui.UIViewModel
 import com.example.campustransaction.ui.posts.user_post.adapter.PostAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import androidx.navigation.fragment.findNavController
+
 
 
 class UserPostFragment : Fragment() {
@@ -91,13 +93,22 @@ class UserPostFragment : Fragment() {
             .setTitle("Modify Post")
             .setMessage("Please select an option to delete, modify or mark sold this post.")
             .setCancelable(false)
-            .setNegativeButton("CANCEL") {_, _ -> unDeletePost() }
+            .setNegativeButton("EDIT") {_, _ -> editPost(pid) }
             .setPositiveButton("DELETE") {_, _ -> deletePost(pid) }
                 .setNeutralButton("SOLD") {_, _ -> soldPost(pid) }
             .show()
     }
 
     private fun unDeletePost(){}
+    private fun editPost(pid: String) {
+        val action = UserPostFragmentDirections.actionUserPostFragmentToEditPostFragment(pid)
+        Log.d("UserPostFragment", "editPost called with pid: $pid")
+
+        findNavController().navigate(action)
+
+
+
+    }
 
     private fun deletePost(pid: String){
         viewModel.sdkDeletePost(pid)
